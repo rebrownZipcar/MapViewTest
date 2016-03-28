@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="UOY-fT-2kF">
+            <objects>
+                <viewController id="HXV-kv-t9v" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U6B-kC-Vad"/>
+                        <viewControllerLayoutGuide type="bottom" id="B1O-dV-yDr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cih-ma-cg5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIA-Kb-KDr" userLabel="OneWayOptionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhC-n8-J5p" userLabel="roundTrip">
+                                        <rect key="frame" x="0.0" y="0.0" width="299.5" height="40"/>
+                                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
+                                        <state key="normal" title="round trip">
+                                            <color key="titleColor" red="0.43137254899999999" green="0.42352941179999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="42c-H6-UJ9" userLabel="selectedRoundTrip">
+                                        <rect key="frame" x="0.0" y="36" width="299.5" height="4"/>
+                                        <color key="backgroundColor" red="0.31764705879999999" green="0.65098039220000004" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="YZt-3N-bfE"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wR-nu-kY1" userLabel="oneWay">
+                                        <rect key="frame" x="300" y="-2" width="299.5" height="42"/>
+                                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
+                                        <state key="normal" title="one-way">
+                                            <color key="titleColor" red="0.43137254899999999" green="0.42352941179999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-PZ-Yof" userLabel="selectedOneWay">
+                                        <rect key="frame" x="300" y="36" width="299.5" height="4"/>
+                                        <color key="backgroundColor" red="0.31764705879999999" green="0.65098039220000004" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="4" id="jbe-BJ-zao"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.81176470590000005" blue="0.81176470590000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="42c-H6-UJ9" firstAttribute="leading" secondItem="rhC-n8-J5p" secondAttribute="leading" id="9Up-cn-fMP"/>
+                                    <constraint firstAttribute="bottom" secondItem="6wR-nu-kY1" secondAttribute="bottom" id="BAc-O8-O46"/>
+                                    <constraint firstItem="rhC-n8-J5p" firstAttribute="leading" secondItem="qIA-Kb-KDr" secondAttribute="leading" id="CHT-D4-rdN"/>
+                                    <constraint firstItem="rhC-n8-J5p" firstAttribute="width" secondItem="6wR-nu-kY1" secondAttribute="width" id="DOV-bu-nhX"/>
+                                    <constraint firstAttribute="trailing" secondItem="6wR-nu-kY1" secondAttribute="trailing" id="Dpe-1v-0zo"/>
+                                    <constraint firstItem="6wR-nu-kY1" firstAttribute="leading" secondItem="rhC-n8-J5p" secondAttribute="trailing" constant="1" id="E1a-P5-Koc"/>
+                                    <constraint firstItem="6wR-nu-kY1" firstAttribute="bottom" secondItem="G3X-PZ-Yof" secondAttribute="bottom" id="IQe-sh-fyg"/>
+                                    <constraint firstItem="6wR-nu-kY1" firstAttribute="trailing" secondItem="G3X-PZ-Yof" secondAttribute="trailing" id="LRk-JW-OBK"/>
+                                    <constraint firstItem="6wR-nu-kY1" firstAttribute="width" secondItem="G3X-PZ-Yof" secondAttribute="width" id="OoC-Q5-YsW"/>
+                                    <constraint firstItem="42c-H6-UJ9" firstAttribute="width" secondItem="rhC-n8-J5p" secondAttribute="width" id="PIu-y7-FHl"/>
+                                    <constraint firstItem="6wR-nu-kY1" firstAttribute="top" secondItem="qIA-Kb-KDr" secondAttribute="top" constant="-2" id="dx5-AP-TGB"/>
+                                    <constraint firstItem="42c-H6-UJ9" firstAttribute="bottom" secondItem="rhC-n8-J5p" secondAttribute="bottom" id="gsx-7a-I1y"/>
+                                    <constraint firstItem="rhC-n8-J5p" firstAttribute="top" secondItem="qIA-Kb-KDr" secondAttribute="top" id="jMd-KW-tLe"/>
+                                    <constraint firstAttribute="height" constant="40" id="x0e-SG-I7v"/>
+                                    <constraint firstAttribute="bottom" secondItem="rhC-n8-J5p" secondAttribute="bottom" id="ylF-of-Xkd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kcd-eM-O7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="628" y="518"/>
+        </scene>
+    </scenes>
+</document>
