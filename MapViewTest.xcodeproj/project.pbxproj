@@ -7,7 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9253FFAE1CA9623B00AE8622 /* MapViewOverlay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9253FFAD1CA9623B00AE8622 /* MapViewOverlay.storyboard */; };
+		9278ADA31CAC179A006B945D /* MapCalloutViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */; };
+		9278ADA51CAC1BD4006B945D /* MapCalloutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */; };
+		92A940751CAD4C6F00C68D30 /* DINOffc-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92A940741CAD4C6F00C68D30 /* DINOffc-Medium.ttf */; };
+		92A940771CAD4CDE00C68D30 /* DINOffc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92A940761CAD4CDE00C68D30 /* DINOffc.ttf */; };
+		92A940791CAD578300C68D30 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A940781CAD578300C68D30 /* LocationManager.swift */; };
+		92F5B7D31CAED3570054322E /* ToolBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7D21CAED3570054322E /* ToolBarViewController.swift */; };
+		92F5B7D51CAEF84F0054322E /* TripIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7D41CAEF84F0054322E /* TripIndicatorViewController.swift */; };
+		92F5B7DA1CB2CFD80054322E /* FilterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92F5B7D91CB2CFD80054322E /* FilterViewController.storyboard */; };
+		92F5B7DD1CB2D3620054322E /* FilterVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7DC1CB2D3620054322E /* FilterVehicleViewController.swift */; };
+		92F5B7DF1CB2F8400054322E /* LocalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7DE1CB2F8400054322E /* LocalModel.swift */; };
+		92F5B7E11CB2FC1D0054322E /* LocalStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7E01CB2FC1D0054322E /* LocalStyles.swift */; };
+		92F5B7E41CB302E80054322E /* FilterCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F5B7E31CB302E80054322E /* FilterCollectionCell.swift */; };
 		92FFDB651CA4071B006C22BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFDB641CA4071B006C22BF /* AppDelegate.swift */; };
 		92FFDB671CA4071B006C22BF /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FFDB661CA4071B006C22BF /* TestViewController.swift */; };
 		92FFDB6A1CA4071B006C22BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92FFDB681CA4071B006C22BF /* Main.storyboard */; };
@@ -31,7 +42,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9253FFAD1CA9623B00AE8622 /* MapViewOverlay.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapViewOverlay.storyboard; sourceTree = "<group>"; };
+		9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapCalloutViewController.storyboard; sourceTree = "<group>"; };
+		9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCalloutViewController.swift; sourceTree = "<group>"; };
+		92A940741CAD4C6F00C68D30 /* DINOffc-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINOffc-Medium.ttf"; path = "Fonts/DINOffc/DINOffc-Medium.ttf"; sourceTree = "<group>"; };
+		92A940761CAD4CDE00C68D30 /* DINOffc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DINOffc.ttf; path = Fonts/DINOffc/DINOffc.ttf; sourceTree = "<group>"; };
+		92A940781CAD578300C68D30 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		92F5B7D21CAED3570054322E /* ToolBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolBarViewController.swift; sourceTree = "<group>"; };
+		92F5B7D41CAEF84F0054322E /* TripIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripIndicatorViewController.swift; sourceTree = "<group>"; };
+		92F5B7D91CB2CFD80054322E /* FilterViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FilterViewController.storyboard; sourceTree = "<group>"; };
+		92F5B7DC1CB2D3620054322E /* FilterVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVehicleViewController.swift; sourceTree = "<group>"; };
+		92F5B7DE1CB2F8400054322E /* LocalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalModel.swift; sourceTree = "<group>"; };
+		92F5B7E01CB2FC1D0054322E /* LocalStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStyles.swift; sourceTree = "<group>"; };
+		92F5B7E31CB302E80054322E /* FilterCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCollectionCell.swift; sourceTree = "<group>"; };
 		92FFDB611CA4071B006C22BF /* MapViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FFDB641CA4071B006C22BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92FFDB661CA4071B006C22BF /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +88,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92F5B7DB1CB2D0090054322E /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				92F5B7D91CB2CFD80054322E /* FilterViewController.storyboard */,
+				92FFDB681CA4071B006C22BF /* Main.storyboard */,
+				92FFDB841CA40742006C22BF /* MapView.storyboard */,
+				9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */,
+				92FFDB6D1CA4071B006C22BF /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		92F5B7E21CB302670054322E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				92FFDB6B1CA4071B006C22BF /* Assets.xcassets */,
+				92A940761CAD4CDE00C68D30 /* DINOffc.ttf */,
+				92A940741CAD4C6F00C68D30 /* DINOffc-Medium.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		92FFDB581CA4071B006C22BF = {
 			isa = PBXGroup;
 			children = (
@@ -89,15 +133,20 @@
 			children = (
 				92FFDB641CA4071B006C22BF /* AppDelegate.swift */,
 				92FFDB661CA4071B006C22BF /* TestViewController.swift */,
-				92FFDB681CA4071B006C22BF /* Main.storyboard */,
-				92FFDB841CA40742006C22BF /* MapView.storyboard */,
-				9253FFAD1CA9623B00AE8622 /* MapViewOverlay.storyboard */,
-				92FFDB6B1CA4071B006C22BF /* Assets.xcassets */,
-				92FFDB6D1CA4071B006C22BF /* LaunchScreen.storyboard */,
+				92F5B7E31CB302E80054322E /* FilterCollectionCell.swift */,
+				92A940781CAD578300C68D30 /* LocationManager.swift */,
 				92FFDB701CA4071B006C22BF /* Info.plist */,
 				92FFDB8A1CA41724006C22BF /* LocalLocation.swift */,
+				92F5B7DE1CB2F8400054322E /* LocalModel.swift */,
+				92F5B7E01CB2FC1D0054322E /* LocalStyles.swift */,
 				92FFDB881CA4170F006C22BF /* MapViewController.swift */,
 				92FFDB861CA416FC006C22BF /* MapViewModel.swift */,
+				9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */,
+				92F5B7D21CAED3570054322E /* ToolBarViewController.swift */,
+				92F5B7D41CAEF84F0054322E /* TripIndicatorViewController.swift */,
+				92F5B7DC1CB2D3620054322E /* FilterVehicleViewController.swift */,
+				92F5B7E21CB302670054322E /* Resources */,
+				92F5B7DB1CB2D0090054322E /* Storyboards */,
 			);
 			path = MapViewTest;
 			sourceTree = "<group>";
@@ -161,6 +210,11 @@
 				TargetAttributes = {
 					92FFDB601CA4071B006C22BF = {
 						CreatedOnToolsVersion = 7.3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					92FFDB741CA4071B006C22BF = {
 						CreatedOnToolsVersion = 7.3;
@@ -194,9 +248,12 @@
 			files = (
 				92FFDB6F1CA4071B006C22BF /* LaunchScreen.storyboard in Resources */,
 				92FFDB6C1CA4071B006C22BF /* Assets.xcassets in Resources */,
+				92A940771CAD4CDE00C68D30 /* DINOffc.ttf in Resources */,
+				92F5B7DA1CB2CFD80054322E /* FilterViewController.storyboard in Resources */,
 				92FFDB851CA40742006C22BF /* MapView.storyboard in Resources */,
-				9253FFAE1CA9623B00AE8622 /* MapViewOverlay.storyboard in Resources */,
+				92A940751CAD4C6F00C68D30 /* DINOffc-Medium.ttf in Resources */,
 				92FFDB6A1CA4071B006C22BF /* Main.storyboard in Resources */,
+				9278ADA31CAC179A006B945D /* MapCalloutViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,11 +271,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F5B7D31CAED3570054322E /* ToolBarViewController.swift in Sources */,
+				92F5B7DD1CB2D3620054322E /* FilterVehicleViewController.swift in Sources */,
+				92F5B7D51CAEF84F0054322E /* TripIndicatorViewController.swift in Sources */,
+				9278ADA51CAC1BD4006B945D /* MapCalloutViewController.swift in Sources */,
 				92FFDB671CA4071B006C22BF /* TestViewController.swift in Sources */,
+				92F5B7E41CB302E80054322E /* FilterCollectionCell.swift in Sources */,
 				92FFDB651CA4071B006C22BF /* AppDelegate.swift in Sources */,
+				92F5B7DF1CB2F8400054322E /* LocalModel.swift in Sources */,
+				92A940791CAD578300C68D30 /* LocationManager.swift in Sources */,
 				92FFDB8B1CA41724006C22BF /* LocalLocation.swift in Sources */,
 				92FFDB871CA416FC006C22BF /* MapViewModel.swift in Sources */,
 				92FFDB891CA4170F006C22BF /* MapViewController.swift in Sources */,
+				92F5B7E11CB2FC1D0054322E /* LocalStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIA-Kb-KDr" userLabel="OneWayOptionView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIA-Kb-KDr" userLabel="OneWayOptionView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhC-n8-J5p" userLabel="roundTrip">
-                                        <rect key="frame" x="0.0" y="0.0" width="299.5" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhC-n8-J5p" userLabel="roundTrip">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
                                         <state key="normal" title="round trip">
@@ -29,15 +29,15 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="42c-H6-UJ9" userLabel="selectedRoundTrip">
-                                        <rect key="frame" x="0.0" y="36" width="299.5" height="4"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42c-H6-UJ9" userLabel="selectedRoundTrip">
+                                        <rect key="frame" x="0.0" y="36" width="300" height="4"/>
                                         <color key="backgroundColor" red="0.31764705879999999" green="0.65098039220000004" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="YZt-3N-bfE"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wR-nu-kY1" userLabel="oneWay">
-                                        <rect key="frame" x="300" y="-2" width="299.5" height="42"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wR-nu-kY1" userLabel="oneWay">
+                                        <rect key="frame" x="300" y="-2" width="300" height="42"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
                                         <state key="normal" title="one-way">
@@ -45,8 +45,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-PZ-Yof" userLabel="selectedOneWay">
-                                        <rect key="frame" x="300" y="36" width="299.5" height="4"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-PZ-Yof" userLabel="selectedOneWay">
+                                        <rect key="frame" x="300" y="36" width="300" height="4"/>
                                         <color key="backgroundColor" red="0.31764705879999999" green="0.65098039220000004" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="jbe-BJ-zao"/>
@@ -74,6 +74,11 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qIA-Kb-KDr" firstAttribute="leading" secondItem="Cih-ma-cg5" secondAttribute="leading" id="6Cd-Z1-KFB"/>
+                            <constraint firstAttribute="trailing" secondItem="qIA-Kb-KDr" secondAttribute="trailing" id="YFK-9R-Tnk"/>
+                            <constraint firstItem="qIA-Kb-KDr" firstAttribute="top" secondItem="Cih-ma-cg5" secondAttribute="top" id="jta-Su-DdZ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kcd-eM-O7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
