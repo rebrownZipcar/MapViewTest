@@ -24,8 +24,8 @@ class FilterCollectionCell: UICollectionViewCell
         self.layer.borderColor = UIColor.whiteColor().CGColor
     }
 
-    func setSelected (selected: Bool)
-    {
+//    func setSelected (selected: Bool)
+//    {
 //    id changes = ^{
 //    if ( selected )
 //    {
@@ -44,6 +44,7 @@ class FilterCollectionCell: UICollectionViewCell
 //    options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent
 //    animations:changes
 //    completion:nil];
-    }
+//    }
 
 }
+

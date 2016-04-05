@@ -44,13 +44,13 @@ struct LocalModels
     ]
 
     private static let database: Dictionary<String, LocalModel> =
-        {
-            var theDatabase = Dictionary<String, LocalModel>()
-            var i = 1
+    {
+        var theDatabase = Dictionary<String, LocalModel>()
 
-            for model in LocalModels().localModels
-            {
-                theDatabase[i++] = model
-            }
-    }
+        for model in LocalModels().localModels
+        {
+            theDatabase[model.imageName as String] = model
+        }
+        return theDatabase
+    }()
 }

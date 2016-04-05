@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
-
-class FilterVehicleViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+class FilterVehicleViewController: UICollectionViewController
 {
+
     var modelData = LocalModels()
     var styleData = LocalStyles()
 
@@ -21,14 +22,18 @@ class FilterVehicleViewController: UICollectionViewDelegate, UICollectionViewDel
     {
     }
 
-    override func viewDidLoad ()
-    {
-        super.viewDidLoad()
+//    override func viewDidLoad ()
+//    {
+//        super.viewDidLoad()
 
 //        self.carCells.dataSource          = self.genDataSource;
 //    _collectionView.accessibilityIdentifier = @"filterVehicleCollectionView";
-    }
+//    }
 
+    override func numberOfSectionsInCollectionView (collectionView: UICollectionView) -> Int
+    {
+        return 1
+    }
 
     override func collectionView (collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {

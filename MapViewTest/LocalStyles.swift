@@ -42,11 +42,11 @@ struct LocalStyles
     private static let database: Dictionary<String, LocalStyle> =
     {
         var theDatabase = Dictionary<String, LocalStyle>()
-        var i = 1
 
         for style in LocalStyles().localStyles
         {
-            theDatabase[i++] = style
+            theDatabase[style.imageName as String] = style
         }
-    }
+        return theDatabase
+    }()
 }
