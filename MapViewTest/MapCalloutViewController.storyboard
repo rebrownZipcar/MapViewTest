@@ -84,7 +84,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="calloutInfo" width="22" height="22"/>
+        <image name="calloutInfo" width="50" height="50"/>
         <image name="map_line" width="179" height="25"/>
     </resources>
 </document>

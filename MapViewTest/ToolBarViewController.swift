@@ -11,6 +11,8 @@ import UIKit
 
 class ToolBarViewController: UIViewController
 {
+    var delegate: ToolBarDelegate?
+
     @IBOutlet weak var toolBar: UIView!
     @IBOutlet weak var toolBarHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var carFilterButton: UIButton!
@@ -21,6 +23,7 @@ class ToolBarViewController: UIViewController
     {
         //       instantiateViewControllerWithIdentifier("transitionToFilterViewController")
         self.performSegueWithIdentifier("transitionToFilterViewController", sender: nil)
+        delegate?.filteredSelection()
     }
 
     override func viewDidLoad()
@@ -37,6 +40,7 @@ class ToolBarViewController: UIViewController
         carFilterButton.hidden = true
         carFilterButtonLabelsView.hidden = true
         dividerView.hidden = true
+        delegate?.adjustView (44)
 
         UIView.animateWithDuration(0.35, animations: { () -> Void in
             self.view.layoutIfNeeded()
@@ -49,6 +53,7 @@ class ToolBarViewController: UIViewController
         carFilterButton.hidden = false
         carFilterButtonLabelsView.hidden = false
         dividerView.hidden = false
+        delegate?.adjustView (-44)
 
         UIView.animateWithDuration(0.35, animations: { () -> Void in
             self.view.layoutIfNeeded()
@@ -60,4 +65,10 @@ class ToolBarViewController: UIViewController
         //            self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
         //        }
     }
+}
+
+protocol ToolBarDelegate
+{
+    func filteredSelection ()
+    func adjustView (adjustSize: Int)
 }

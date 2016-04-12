@@ -6,175 +6,209 @@
 //  Copyright © 2016 Zipcar, Inc. All rights reserved.
 //
 
+//// mapzone.
+
 import Foundation
 import UIKit
 import MapKit
 
-class CustomAnno: MKPointAnnotation
+extension MKPointAnnotation
 {
-    var loc: LocalLocation? = nil
+    var loc: LocalLocation?
+    {
+        get
+        {
+            return nil
+        }
+
+        set { }
+    }
+}
+//
+//    var pinImage: UIImage?
+//    {
+//        get
+//        {
+//            return nil
+//        }
+//    }
+//
+//}
+
+protocol pinImage: UIImage {}
+
+protocol customAnnotation
+{
+    typealias IM: pinImage
+    func getPinImage() -> IM
 }
 
-class SearchAnno: MKPointAnnotation
+class allAnnotation: MKPointAnnotation, customAnnotation
 {
+    func getPinImage()
+    {
+        return nil
+    }
+}
 
+class VehicleAvailAnnotation: allAnnotation
+{
+    override var pinImage: UIImage?
+    {
+        get
+        {
+            return UIImage(named: "greenpin")
+        }
+    }
+
+}
+
+class NoVehicleAvailAnnotation: allAnnotation
+{
+    override var pinImage: UIImage?
+    {
+        get
+        {
+            return UIImage(named: "graypin")
+        }
+    }
+    
+}
+
+/// These and the extension below are 2 ways of doing the same thing. Keep for now.
+public func ==(left: CLLocationCoordinate2D, right: CLLocationCoordinate2D) -> Bool
+{
+    return (left.latitude == right.latitude) && (left.longitude == right.longitude)
+}
+
+public func !=(left: CLLocationCoordinate2D, right: CLLocationCoordinate2D) -> Bool
+{
+    return !(left == right)
+}
+
+extension CLLocationCoordinate2D
+{
+    func equals (right: CLLocationCoordinate2D) -> Bool
+    {
+        return self.latitude == right.latitude && self.longitude == right.longitude
+    }
+
+    func notEquals (right: CLLocationCoordinate2D) -> Bool
+    {
+        return !(self.equals(right))
+    }
 }
 
 ///•• changes for toolbar, trip type need to be handled here. 
 ///•• Also need to inform MapViewController when zoom/maprgn changes, to show redo search btn.
 
-class MapViewModel: NSObject, MKMapViewDelegate
+class MapViewModel: NSObject
 {
-    var mapView: MKMapView!
+    var mapView: MKMapView?
 //    var mvmDelegate: MapViewModelDelegate?
 
-    var desiredAccuracy: CLLocationAccuracy = LocationManager.sharedInstance.desiredAccuracy
-    var distanceFilter: CLLocationDistance = LocationManager.sharedInstance.distanceFilter
-    var locationChangeObserver: AnyObject? = nil
-    var usageType: LocalLocationUsageTypes = .Unified
+    var mapRadius = 0.05
+    var allowPinDraw = false
 
-    var addressLocation: CLLocationCoordinate2D!
+    var addressLocation: CLLocationCoordinate2D?
     {
         didSet
         {
-            self.generatePins ()
+            if addressLocation!.latitude == 0 && addressLocation!.longitude == 0
+            {
+                locateMe ()
+            }
+
+            if allowPinDraw
+            {
+                self.generatePins ()
+            }
+
+            self.mapView?.centerCoordinate = addressLocation!
+            self.mapView?.region = MKCoordinateRegionMake (addressLocation!, MKCoordinateSpanMake(mapRadius, mapRadius))
         }
     }
 
-    lazy var locationUpdatedNotificationBlock: (NSNotification -> Void) = { [weak self] (locationUpdatedNotification: NSNotification) in
-        guard let strongSelf = self else
-        {
-            return
-        }
-
-        if let locationChangeObserver = strongSelf.locationChangeObserver
-        {
-            NSNotificationCenter.defaultCenter().removeObserver(locationChangeObserver,
-                                                                name: "location", object: LocationManager.sharedInstance)
-        }
-
-        if let location = locationUpdatedNotification.userInfo?["location"] as? CLLocation
-        {
-            strongSelf.addressLocation = location.coordinate
-        }
-    }
-    
+    var lastCenter: CLLocationCoordinate2D?
 
     /// View model owns the model. In a real world version of this, the model locations should be set or updated
     ///  for the current map region.
     var locations = LocalLocations.sharedInstance
 
-    deinit
-    {
-        LocationManager.sharedInstance.desiredAccuracy = desiredAccuracy
-        LocationManager.sharedInstance.distanceFilter = distanceFilter
-
-        if let locationChangeObserver = locationChangeObserver
-        {
-            NSNotificationCenter.defaultCenter().removeObserver(locationChangeObserver,
-                                                                name: "location", object: LocationManager.sharedInstance)
-        }
-    }
-
-
-    init (startLoc: CLLocationCoordinate2D, mapView: MKMapView)
-    {
-        super.init()
-        self.mapView = mapView
-
-        if startLoc.latitude == 0 && startLoc.longitude == 0
-        {
-            locateMe ()
-        }
-
-        addressLocation = startLoc
-        self.mapView.centerCoordinate = addressLocation
-    }
-
-    func loadLocationInformation()
-    {
-        if let location = LocationManager.sharedInstance.lastKnownLocation()
-        {
-            let locationNotification = NSNotification(name: "location",
-                                                      object: LocationManager.sharedInstance,
-                                                      userInfo: ["location" : location])
-            locationUpdatedNotificationBlock(locationNotification)
-        }
-        else if LocationManager.sharedInstance.areLocationUpdatesPermissible
-        {
-            locationChangeObserver = NSNotificationCenter.defaultCenter().addObserverForName("location",
-                                                                                             object: LocationManager.sharedInstance,
-                                                                                             queue: nil,
-                                                                                             usingBlock: locationUpdatedNotificationBlock)
-
-            LocationManager.sharedInstance.desiredAccuracy = kCLLocationAccuracyBest
-            LocationManager.sharedInstance.distanceFilter = kCLDistanceFilterNone
-            LocationManager.sharedInstance.startUpdatingLocation()
-        }
-    }
-
+    /// This assumes pattern of either round trip or one way locations. Not sure how unified search affects individual locations.
+    ///
     func changeTripType (isOneWay: Bool)
     {
-        locations.populateLocations (addressLocation, usageType: (isOneWay == true ? .OneWay : .RoundTrip))
-    }
-
-
-    func mapView (mapView: MKMapView, regionDidChangeAnimated animated: Bool)
-    {
-        //let distanceFromOldCenter = centerCoordiate.distanceFromLocation (CLLocation(latitude: addressLocation.latitude, longitude: addressLocation.longitude))
-        // Call delegate protocol, so that locations get updated per region, or rather, center of new region.
-        addressLocation = mapView.centerCoordinate
-
-        /// Tell MapViewController to display redo search button.
+        /// Pass LocationService as a way of method injection. Unit test can use a fake service.
+        locations.populateLocations (addressLocation!, usageType: (isOneWay == true ? .OneWay : .RoundTrip))
     }
 
     func locateMe ()
     {
-        mapView.deselectAnnotation (mapView.selectedAnnotations.first, animated: true)
-
-        if LocationManager.sharedInstance.authorizationStatus == .AuthorizedWhenInUse ||
-            LocationManager.sharedInstance.authorizationStatus == .AuthorizedAlways
+        if let locMapView = mapView
         {
-            if mapView.centerCoordinate.latitude != mapView.userLocation.coordinate.latitude &&
-                mapView.centerCoordinate.longitude != mapView.userLocation.coordinate.longitude
+            locMapView.deselectAnnotation (locMapView.selectedAnnotations.first, animated: true)
+
+            if LocationManager.sharedInstance.authorizationStatus == .AuthorizedWhenInUse ||
+                LocationManager.sharedInstance.authorizationStatus == .AuthorizedAlways
             {
-                mapView.centerCoordinate = mapView.userLocation.coordinate
-                addressLocation = mapView.centerCoordinate
+                if locMapView.centerCoordinate != locMapView.userLocation.coordinate &&
+                    (locMapView.userLocation.coordinate.latitude != 0 && locMapView.userLocation.coordinate.longitude != 0)       // Shouldn't be necessary.
+                {
+                    locMapView.centerCoordinate = locMapView.userLocation.coordinate
+                    addressLocation = locMapView.centerCoordinate
+                    lastCenter = locMapView.centerCoordinate
+                }
             }
-        }
-        else
-        {
-            let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Alert Title for location services disabled"), message: NSLocalizedString("We need access to your location to show you the closest cars. You can update this in settings.", comment: "Prompt the user to turn on their location services"), preferredStyle: .Alert)
-
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel the dialog"), style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "Device Settings"), style: .Default, handler: nil))
-
-            if let rootController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            else
             {
-                rootController.presentViewController (alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Alert Title for location services disabled"), message: NSLocalizedString("We need access to your location to show you the closest cars. You can update this in settings.", comment: "Prompt the user to turn on their location services"), preferredStyle: .Alert)
+
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel the dialog"), style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "Device Settings"), style: .Default, handler: nil))
+
+                if let rootController = UIApplication.sharedApplication().keyWindow?.rootViewController
+                {
+                    rootController.presentViewController (alert, animated: true, completion: nil)
+                }
             }
         }
     }
 
+    // MARK: - handle VC Mapview Delegate changes
 
-    func mapView (mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+    func updateUserLocation (mapView: MKMapView, userLocation: MKUserLocation)
     {
-        guard annotation is CustomAnno else//|| annotation is SearchAnno else
+        allowPinDraw = true
+        addressLocation = mapView.centerCoordinate
+        lastCenter = mapView.centerCoordinate
+    }
+
+    func updateWithMapRegionChange (mapView: MKMapView)
+    {
+        if let hasLast = lastCenter where hasLast != mapView.region.center
+        {
+            generatePins()
+            lastCenter = mapView.region.center
+        }
+    }
+
+//    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
+//    {
+////        return mapView.configureOverlay (overlay)
+//    }
+//
+
+    func viewForAnnotation (annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        guard annotation is VehicleAvailAnnotation || annotation is NoVehicleAvailAnnotation else
         {
             return nil
         }
 
         let annotationView = getAnnotationView (annotation, identifier: "annotationViewID")
 
-        if let customAnnon = annotation as? CustomAnno where locations.locationCount() > 0, let ziploc = customAnnon.loc
-        {
-            annotationView.image = mapViewAnnotationImageFor(ziploc)
-        }
-        else
-        {
-            annotationView.image = UIImage(named: "greenpin")
-        }
-
+        annotationView.image = (annotation as! allAnnotation).pinImage
         annotationView.annotation = annotation
         annotationView.canShowCallout = true
 
@@ -183,7 +217,7 @@ class MapViewModel: NSObject, MKMapViewDelegate
 
     private func getAnnotationView (annotation: MKAnnotation, identifier withIdentifier: String) -> MKAnnotationView
     {
-        if let annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(withIdentifier)
+        if let annotationView = mapView?.dequeueReusableAnnotationViewWithIdentifier(withIdentifier)
         {
             return annotationView
         }
@@ -192,121 +226,65 @@ class MapViewModel: NSObject, MKMapViewDelegate
     }
 
 
-    // MARK:  Lincoln's annotation animation code.
-
-    func mapView (mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView])
-    {
-        animateAnnotations(views)
-    }
-
-    private func animateAnnotations (annotations: [MKAnnotationView])
-    {
-        guard !annotations.isEmpty else
-        {
-            return
-        }
-
-        annotations.forEach
-        {
-            annotation in
-            annotation.alpha = 0.0
-        }
-
-        animate (annotations: annotations, index: 0)
-    }
-
-    private func animate (annotations annotations: [MKAnnotationView], index: Int)
-    {
-        guard index < annotations.count else
-        {
-            return
-        }
-
-        let individualDuration = 0.35
-        let totalDuration = 2.0
-        let annotation = annotations[index]
-        let originalY = annotation.frame.origin.y
-
-        annotation.frame.origin.y = -50
-        annotation.alpha = 1.0
-
-        UIView.animateWithDuration (individualDuration, animations: {
-            annotation.frame.origin.y = originalY
-
-            let interval: Double = (totalDuration - individualDuration) / Double(annotations.count)
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC)))
-
-            dispatch_after(delay, dispatch_get_main_queue(), {
-                    self.animate(annotations: annotations, index: index + 1)
-            })
-        })
-    }
 
     // MARK: Annotations
 
-    func mapView (mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView)
+    func didSelectAnnotationView (view: MKAnnotationView)
     {
-        if view.annotation is MKUserLocation || view.annotation is SearchAnno
+        guard view.annotation is VehicleAvailAnnotation || view.annotation is NoVehicleAvailAnnotation else
         {
             return
         }
 
-//        let customAnno = view.annotation as! CustomAnno
-
-        if let ziploc = (view.annotation as! CustomAnno).loc
+        if let ziploc = (view.annotation as! MKPointAnnotation).loc
         {
-            let callout = self.getCallout(ziploc)
+            if let callout = self.getCallout(ziploc)
+            {
 
 //            callout.presentCalloutFromRect (view.bounds, inView: view, constrainedToView: mapView, animated: true)
-            UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController (callout, animated: true, completion: nil)
+                UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController (callout, animated: true, completion: nil)
+            }
         }
     }
 
     func generatePins ()
     {
-        mapView.removeAnnotations(mapView.annotations.filter({ (object) -> Bool in
-            return object is CustomAnno
-        }))
-
-        do
+//        mapView.removeAnnotations(mapView.annotations.filter({ (object) -> Bool in
+//            return object is CustomAnno
+//        }))
+        if let locMapView = self.mapView
         {
-            let results = try locations.getLocationsInRange (addressLocation, radius: mapView.getRegionRadius())
+            locMapView.removeAnnotations(locMapView.annotations)
 
-            for location in results
+            do
             {
-                let annotation = createAnnotationForLocalLocation(location)
-                mapView.addAnnotation(annotation)
-            }
-        }
-        catch
-        {
-            NSLog("MapViewModel.generatePins call to locations.getLocationsInRange failed due as no locations found within range.")
-        }
-    }
+                let results = try locations.getLocationsInRange (locMapView.region.center, radius: locMapView.getRegionRadius())
 
-    func mapViewAnnotationImageFor (localLocation: LocalLocation) -> UIImage
-    {
-        if localLocation.vehicleCount > 0 //|| (localLocation.isPoolingLocationAndAvailable() && dataSource.getIsFlexible() == false)
-        {
-            return UIImage(named: "greenpin")!
-        }
-        else
-        {
-            return UIImage(named: "graypin")!
+                for location in results
+                {
+                    let annotation = createAnnotationForLocalLocation(location)
+                    locMapView.addAnnotation(annotation)
+                }
+            }
+            catch
+            {
+                NSLog("MapViewModel.generatePins call to locations.getLocationsInRange failed due as no locations found within range.")
+            }
         }
     }
 
     func createAnnotationForLocalLocation (localLocation: LocalLocation) -> MKPointAnnotation
     {
-        let annotation           = CustomAnno()
+        let annotation           = localLocation.vehicleCount > 0 ? VehicleAvailAnnotation() : NoVehicleAvailAnnotation()
         annotation.coordinate    = CLLocationCoordinate2DMake(localLocation.lat, localLocation.long)
         annotation.title         = "This place"
+        annotation.subtitle      = "here"
         annotation.loc           = localLocation
 
         return annotation
     }
 
-    func getCallout (localLocation: LocalLocation) -> MapCalloutViewController
+    func getCallout (localLocation: LocalLocation) -> MapCalloutViewController?
     {
 //        struct Holder
 //        {
@@ -317,13 +295,13 @@ class MapViewModel: NSObject, MKMapViewDelegate
 //        Holder.callout.delegate  = self
 //        self.mapView.calloutView = Holder.callout
 
-        let storyboard = UIStoryboard(name: "MapCalloutViewController", bundle: NSBundle.mainBundle())
-        let calloutView = storyboard.instantiateViewControllerWithIdentifier("mapCalloutView") as! MapCalloutViewController
-        
+        //        let storyboard = UIStoryboard(name: "MapCalloutViewController", bundle: NSBundle.mainBundle())
+        //        let calloutView = storyboard.instantiateViewControllerWithIdentifier("mapCalloutView") as! MapCalloutViewController
+
         //calloutView.view.frame           = CGRect(x: 0, y: 0, width: 240, height: 53)
 //        Holder.callout.contentView       = calloutView.view
 
-        calloutView.displayLocationInfo (localLocation)
+        //        calloutView.displayLocationInfo (localLocation)
 
 //        if oneWaySearch
 //        {
@@ -343,7 +321,8 @@ class MapViewModel: NSObject, MKMapViewDelegate
 //        }
 
 //        return Holder.callout
-        return calloutView
+//        return calloutView
+        return nil
     }
 
 }
@@ -352,14 +331,9 @@ extension MKMapView
 {
     func getRegionRadius () -> Double
     {
-        let latWidth = centerCoordinate.latitude - region.span.latitudeDelta
-        let latHeight = centerCoordinate.longitude - region.span.longitudeDelta
-
-        return latWidth > latHeight ? latWidth : latHeight
+        let radius = region.span.latitudeDelta > region.span.longitudeDelta ? region.span.latitudeDelta : region.span.longitudeDelta
+        print ("New radius = \(radius). latitudeDelta = \(region.span.latitudeDelta). longitudeDelta = \(region.span.longitudeDelta).")
+        return radius
     }
 }
 
-//protocol MapViewModelDelegate
-//{
-//    func timesChanged (startTime: NSDate, endTime: NSDate)
-//}

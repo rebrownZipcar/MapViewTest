@@ -27,7 +27,6 @@ class TestViewController: UITableViewController
 
         if let mapVC = storyboard.instantiateViewControllerWithIdentifier("mapViewController") as? MapViewController
         {
-            mapVC.attributes = MapViewAttributes(filterToolBar: true, tripButtons: true, locationSearch: true, locateMe: true)
             mapVC.startingLocation = addressLocation
 
             self.tableHeader = mapVC
@@ -38,15 +37,16 @@ class TestViewController: UITableViewController
     override func viewDidAppear (animated: Bool)
     {
         super.viewDidAppear(animated)
+        self.tableHeader.viewDidAppear(animated)
         refresh()
     }
 
     // MARK: - Table view data source
 
-    override func tableView (tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return 1
-    }
+//    override func tableView (tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+//    {
+//        return 1
+//    }
 
 //    override func tableView (tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 //    {
@@ -59,14 +59,14 @@ class TestViewController: UITableViewController
 //        return cell
 //    }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
-    {
-        return true
-    }
-
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-    {
-    }
+//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+//    {
+//        return true
+//    }
+//
+//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+//    {
+//    }
 
     // MARK: - IBActions
 

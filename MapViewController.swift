@@ -9,33 +9,39 @@
 import UIKit
 import MapKit
 
-
-struct MapViewAttributes
+class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndicatorDelegate, ToolBarDelegate, MKMapViewDelegate
 {
-    var hasFilterToolBar: Bool
-    var hasTripButtons: Bool
-    var hasLocationSearch: Bool
-    var hasLocateMeButton: Bool
-
-    init (filterToolBar: Bool = false, tripButtons: Bool = false, locationSearch: Bool = false, locateMe: Bool = false)
-    {
-        hasFilterToolBar = filterToolBar
-        hasTripButtons = tripButtons
-        hasLocationSearch = locationSearch
-        hasLocateMeButton = locateMe
-    }
-}
-
-class MapViewController: UIViewController, TripIndicatorDelegate
-{
-    var mapViewModel: MapViewModel!
+    var mapViewModel = MapViewModel()
+    var locationChangeObserver: AnyObject? = nil
+    var usageType: LocalLocationUsageTypes = .Unified
+    var desiredAccuracy: CLLocationAccuracy = LocationManager.sharedInstance.desiredAccuracy
+    var distanceFilter: CLLocationDistance = LocationManager.sharedInstance.distanceFilter
 
     var locationManager = CLLocationManager()
     var startingLocation: CLLocationCoordinate2D?
-    var attributes: MapViewAttributes?
 
     var toolbarVC: ToolBarViewController?
     var tripIndicatorVC: TripIndicatorViewController?
+
+    lazy var locationUpdatedNotificationBlock: (NSNotification -> Void) = { [weak self] (locationUpdatedNotification: NSNotification) in
+        guard let strongSelf = self else
+        {
+            return
+        }
+
+        if let locationChangeObserver = strongSelf.locationChangeObserver
+        {
+            NSNotificationCenter.defaultCenter().removeObserver(locationChangeObserver,
+                                                                name: "location", object: LocationManager.sharedInstance)
+        }
+
+        if let location = locationUpdatedNotification.userInfo?["location"] as? CLLocation
+        {
+            strongSelf.mapViewModel.addressLocation = location.coordinate
+        }
+    }
+
+    let defaultAddressLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(42.351274, -71.047286)
 
     // MARK: Outlets
 
@@ -45,13 +51,13 @@ class MapViewController: UIViewController, TripIndicatorDelegate
 
     @IBOutlet weak var locationSearchButton: UIButton!
     @IBOutlet weak var locateMeButton: UIButton!
-    @IBOutlet weak var redoSearch: UIButton!
+    @IBOutlet weak var locateSearchBar: UISearchBar!
 
     // MARK: UIButton Actions
 
     @IBAction func searchLocationTappedButton(sender: UIButton)
     {
-        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: false)
+//        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: false)
 //        instantiateViewControllerWithIdentifier("searchLocationsTableViewController")
     }
 
@@ -60,9 +66,16 @@ class MapViewController: UIViewController, TripIndicatorDelegate
         mapViewModel.locateMe()
     }
 
-    @IBAction func redoLocationSearch(sender: AnyObject)
+    deinit
     {
-        self.redoSearch.hidden = true
+        LocationManager.sharedInstance.desiredAccuracy = desiredAccuracy
+        LocationManager.sharedInstance.distanceFilter = distanceFilter
+
+        if let locationChangeObserver = locationChangeObserver
+        {
+            NSNotificationCenter.defaultCenter().removeObserver(locationChangeObserver,
+                                                                name: "location", object: LocationManager.sharedInstance)
+        }
     }
 
     // MARK: - View
@@ -70,56 +83,98 @@ class MapViewController: UIViewController, TripIndicatorDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        mapViewModel = MapViewModel(startLoc: startingLocation!, mapView: mapView)
-        self.redoSearch.hidden = true
 
-        if let attributes =  self.attributes
-        {
-            if attributes.hasFilterToolBar
-            {
-                self.ToolBarViewContainer.hidden = false
-                self.ToolBarViewContainer.userInteractionEnabled = true
-            }
-            else
-            {
-                self.ToolBarViewContainer.hidden = true
-                self.ToolBarViewContainer.userInteractionEnabled = false
-            }
-
-            if attributes.hasTripButtons
-            {
-                self.TripViewContainer.hidden = false
-                self.TripViewContainer.userInteractionEnabled = true
-            }
-            else
-            {
-                self.TripViewContainer.hidden = true
-                self.TripViewContainer.userInteractionEnabled = false
-            }
-
-            self.locateMeButton.hidden = !attributes.hasLocateMeButton
-            self.locationSearchButton.hidden = !attributes.hasLocationSearch
-        }
+        self.mapViewModel.mapView = self.mapView
+        self.mapViewModel.addressLocation = self.startingLocation
     }
 
-    override func viewWillAppear(animated: Bool)
+    func updateAttributes ()
     {
-        mapViewModel.loadLocationInformation()
+        let appDefaults = AppDefaults()
+
+        if appDefaults.toolBarFilter
+        {
+            self.ToolBarViewContainer.hidden = false
+            self.ToolBarViewContainer.userInteractionEnabled = true
+
+            if let tbVC = self.toolbarVC where tbVC.carFilterButton != nil
+            {
+                tbVC.showToolBar()
+            }
+        }
+        else
+        {
+            self.ToolBarViewContainer.hidden = true
+            self.ToolBarViewContainer.userInteractionEnabled = false
+
+            if let tbVC = self.toolbarVC where tbVC.carFilterButton != nil
+            {
+                tbVC.hideToolBar()
+            }
+        }
+
+        if appDefaults.tripsButtons
+        {
+            self.TripViewContainer.hidden = false
+            self.TripViewContainer.userInteractionEnabled = true
+        }
+        else
+        {
+            self.TripViewContainer.hidden = true
+            self.TripViewContainer.userInteractionEnabled = false
+        }
+
+        self.locateMeButton.hidden = !appDefaults.locateMe
+        self.locationSearchButton.hidden = !appDefaults.locationButton
+        self.locateSearchBar.hidden = !appDefaults.locationSearchBar
+    }
+
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+
+        loadLocationInformation()
+        mapView.delegate = self
+//        self.mapViewModel.setupDelegate()
+        updateAttributes()
+    }
+
+    func loadLocationInformation()
+    {
+        if let location = LocationManager.sharedInstance.lastKnownLocation()
+        {
+            let locationNotification = NSNotification(name: "location",
+                                                      object: LocationManager.sharedInstance,
+                                                      userInfo: ["location" : location])
+            locationUpdatedNotificationBlock(locationNotification)
+        }
+        else if LocationManager.sharedInstance.areLocationUpdatesPermissible
+        {
+            locationChangeObserver = NSNotificationCenter.defaultCenter().addObserverForName("location",
+                                                                                             object: LocationManager.sharedInstance,
+                                                                                             queue: nil,
+                                                                                             usingBlock: locationUpdatedNotificationBlock)
+
+            LocationManager.sharedInstance.desiredAccuracy = kCLLocationAccuracyBest
+            LocationManager.sharedInstance.distanceFilter = kCLDistanceFilterNone
+            LocationManager.sharedInstance.startUpdatingLocation()
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
         let destination = segue.destinationViewController
 
-        if self.attributes!.hasFilterToolBar && segue.identifier == "toolBar segue"
+        if AppDefaults().toolBarFilter && segue.identifier == "toolBar segue"
         {
             self.toolbarVC = destination as? ToolBarViewController
+            self.toolbarVC?.delegate = self
         }
 
-        if self.attributes!.hasTripButtons && segue.identifier == "trip indicator segue"
+        if AppDefaults().tripsButtons && segue.identifier == "trip indicator segue"
         {
             self.tripIndicatorVC = destination as? TripIndicatorViewController
+            self.tripIndicatorVC?.delegate = self
         }
     }
 
@@ -127,4 +182,106 @@ class MapViewController: UIViewController, TripIndicatorDelegate
     {
         mapViewModel.changeTripType(isOneWay)
     }
+
+    func filteredSelection ()
+    {
+//        mapViewModel.emulateFiltering ()
+    }
+
+    func adjustView (adjustSize: Int)
+    {
+        var token: dispatch_once_t = 0
+
+        dispatch_once(&token)
+        {
+                // Move the center of the map down by 15% of the visible screen
+//            self.mapView.frame.size.height += CGFloat(adjustSize)
+
+
+//            self.mapView.visibleMapRect.origin.y -= Double(self.mapView.visibleMapRect.size.height * 0.15)
+//            self.mapView.setVisibleMapRect (self.mapView.visibleMapRect, animated: true)
+        }
+    }
+
+    // MARK: - Mapview Delegate
+
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation)
+    {
+        mapViewModel.updateUserLocation (mapView, userLocation: userLocation)
+    }
+
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool)
+    {
+        print("Map region changed. center = \(mapView.region.center.latitude), \(mapView.region.center.longitude)")
+
+        mapViewModel.updateWithMapRegionChange(mapView)
+    }
+
+//    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
+//    {
+//        return mapViewModel.mapView(mapView, rendererForOverlay: overlay)
+//    }
+
+    func mapView (mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView])
+    {
+        animateAnnotations(views)
+    }
+
+    func mapView (mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        return mapViewModel.viewForAnnotation(annotation)
+    }
+
+    // MARK: Annotations
+
+    func mapView (mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView)
+    {
+        mapViewModel.didSelectAnnotationView(view)
+    }
+
+    // MARK:  Lincoln's annotation animation code.
+
+    func animateAnnotations (annotations: [MKAnnotationView])
+    {
+        guard !annotations.isEmpty else
+        {
+            return
+        }
+
+        annotations.forEach
+            {
+                annotation in
+                annotation.alpha = 0.0
+        }
+
+        animate (annotations: annotations, index: 0)
+    }
+
+    private func animate (annotations annotations: [MKAnnotationView], index: Int)
+    {
+        guard index < annotations.count else
+        {
+            return
+        }
+
+        let individualDuration = 0.35
+        let totalDuration = 2.0
+        let annotation = annotations[index]
+        let originalY = annotation.frame.origin.y
+
+        annotation.frame.origin.y = -50
+        annotation.alpha = 1.0
+
+        UIView.animateWithDuration (individualDuration, animations: {
+            annotation.frame.origin.y = originalY
+
+            let interval: Double = (totalDuration - individualDuration) / Double(annotations.count)
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC)))
+
+            dispatch_after(delay, dispatch_get_main_queue(), {
+                self.animate(annotations: annotations, index: index + 1)
+            })
+        })
+    }
+
 }

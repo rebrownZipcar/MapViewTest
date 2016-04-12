@@ -23,13 +23,13 @@ class TripIndicatorViewController: UIViewController
     @IBAction func roundTripAction (sender: UIButton)
     {
         showSelectedRoundTrip()
-        delegate!.tripTypeChanged (false)
+        delegate?.tripTypeChanged (false)
     }
 
     @IBAction func oneWayAction (sender: UIButton)
     {
         showSelectedOneWay()
-        delegate!.tripTypeChanged (true)
+        delegate?.tripTypeChanged (true)
     }
 
     override func viewDidLoad()

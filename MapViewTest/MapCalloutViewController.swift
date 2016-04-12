@@ -52,41 +52,41 @@ class MapCalloutViewController: UIViewController
 
     func displayLocationInfo (location: LocalLocation, attributes: MapCalloutViewAttributes = MapCalloutViewAttributes())
     {
-        carsCount.hidden = !attributes.doShowInfoView
-        carsLabel.hidden = !attributes.doShowInfoView
-        infoImageView.hidden = attributes.doShowInfoView
-
-        if !attributes.bgViewHasDefaultColor
-        {
-            if attributes.bgViewOrange
-            {
-                carsBgView.backgroundColor = UIColor.orangeColor()
-            }
-            else
-            {
-                carsBgView.backgroundColor = UIColor.whiteColor()
-                carsLabel.textColor = UIColor.orangeColor()
-                carsCount.textColor = UIColor.orangeColor()
-            }
-        }
-
-        carsCount.text = "\(location.vehicleCount)"
-
-        distanceLabel.text = "feet"//ZIPDistanceFormatter.abbreviatedDistanceFormat(location.distance).uppercaseString
-
-//        addressLabel.text = location.address.isEmpty ? location.name : location.address
-        addressLabel.text = "Some address"
-        parkingLabel.text = "Zipcar"
-
-//        if location.isPoolingLocation()
+//        carsCount.hidden = !attributes.doShowInfoView
+//        carsLabel.hidden = !attributes.doShowInfoView
+//        infoImageView.hidden = attributes.doShowInfoView
+//
+//        if !attributes.bgViewHasDefaultColor
 //        {
-//            let zipcarOnDeck = NSLocalizedString("Zipcar on deck", comment: "branding, do not localized")
-//            parkingLabel.text = ZIPParkingFormatter.formattedParking(zipcarOnDeck) as String
+//            if attributes.bgViewOrange
+//            {
+//                carsBgView.backgroundColor = UIColor.orangeColor()
+//            }
+//            else
+//            {
+//                carsBgView.backgroundColor = UIColor.whiteColor()
+//                carsLabel.textColor = UIColor.orangeColor()
+//                carsCount.textColor = UIColor.orangeColor()
+//            }
 //        }
-//        else
-//        {
-//            parkingLabel.text = ZIPParkingFormatter.formattedParking(location.parking) as String
-//        }
+//
+//        carsCount.text = "\(location.vehicleCount)"
+//
+//        distanceLabel.text = "feet"//ZIPDistanceFormatter.abbreviatedDistanceFormat(location.distance).uppercaseString
+//
+////        addressLabel.text = location.address.isEmpty ? location.name : location.address
+//        addressLabel.text = "Some address"
+//        parkingLabel.text = "Zipcar"
+//
+////        if location.isPoolingLocation()
+////        {
+////            let zipcarOnDeck = NSLocalizedString("Zipcar on deck", comment: "branding, do not localized")
+////            parkingLabel.text = ZIPParkingFormatter.formattedParking(zipcarOnDeck) as String
+////        }
+////        else
+////        {
+////            parkingLabel.text = ZIPParkingFormatter.formattedParking(location.parking) as String
+////        }
     }
     
 }

@@ -34,6 +34,7 @@ enum LocalLocationUsageTypes
 {
     case RoundTrip
     case OneWay
+    case Floating
     case Unified
 }
 
@@ -111,7 +112,7 @@ class LocalLocations
 
     func populateLocations (centerCoordinate: CLLocationCoordinate2D, usageType: LocalLocationUsageTypes = .Unified)
     {
-        /// Async API call here. Needs progress HUD.
+        /// Async API call here. Needs progress HUD. Or in caller.
 
         /// Determine max distance to set/return radius?
     }
@@ -131,6 +132,7 @@ class LocalLocations
             throw LocalLocationError.NoLocationsInRange
         }
 
+        print("Search results count = \(results.count)")
         return results
     }
 
@@ -138,5 +140,12 @@ class LocalLocations
     {
         return locations.count
     }
+}
 
+class LocationService
+{
+    func getLocations (completion: ([LocalLocation])-> Void)
+    {
+
+    }
 }
