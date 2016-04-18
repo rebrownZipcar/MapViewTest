@@ -38,11 +38,17 @@ class AttributesViewController: UITableViewController
         appDefaults.locateMe = sender.on
     }
 
+    @IBAction func useAddLocationButton(sender: UISwitch)
+    {
+        appDefaults.doAddLocations = sender.on
+    }
+
     @IBOutlet weak var tripsButtonsOutlet: UISwitch!
     @IBOutlet weak var filterToolsOutlet: UISwitch!
     @IBOutlet weak var locationButtonOutlet: UISwitch!
     @IBOutlet weak var locationSearchBarOutlet: UISwitch!
     @IBOutlet weak var locateMeOutlet: UISwitch!
+    @IBOutlet weak var useAddLocationOutlet: UISwitch!
 
     override func viewDidLoad ()
     {
@@ -54,5 +60,6 @@ class AttributesViewController: UITableViewController
         locationButtonOutlet.on = self.appDefaults.locationButton
         locationSearchBarOutlet.on = self.appDefaults.locationSearchBar
         locateMeOutlet.on = self.appDefaults.locateMe
+        useAddLocationOutlet.on = self.appDefaults.doAddLocations
     }
 }

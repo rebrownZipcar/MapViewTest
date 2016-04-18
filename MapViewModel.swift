@@ -109,12 +109,16 @@ class MapViewModel: NSObject
     ///  for the current map region.
     var locations = LocalLocations.sharedInstance
 
-
     override init()
     {
         super.init()
 
         addressObj.changed.subscribe(addressChangedHandler)
+
+        if AppDefaults().hasInitedLocations == false
+        {
+            locations.setInitialLocations()
+        }
     }
 
     func addressChangedHandler (oldValue: CLLocationCoordinate2D, newValue: CLLocationCoordinate2D) -> ()
@@ -133,12 +137,20 @@ class MapViewModel: NSObject
         self.mapView?.region = MKCoordinateRegionMake (addressLocation!, MKCoordinateSpanMake(mapRadius, mapRadius))
 
     }
+
     /// This assumes pattern of either round trip or one way locations. Not sure how unified search affects individual locations.
     ///
     func changeTripType (isOneWay: Bool)
     {
         /// Pass LocationService as a way of method injection. Unit test can use a fake service.
         locations.populateLocations (addressLocation!, usageType: (isOneWay == true ? .OneWay : .RoundTrip))
+    }
+
+    func addNewLocationToModel (newPt: CLLocationCoordinate2D)
+    {
+        let newLoc = LocalLocation(locationId: getRandomNumber(1000000), lat: newPt.latitude, long: newPt.longitude, vehicleCount: getRandomNumber(10))
+        locations.addLocation(newLoc)
+        generatePins()
     }
 
     func locateMe ()
@@ -317,6 +329,10 @@ class MapViewModel: NSObject
         return nil
     }
 
+    private func getRandomNumber (upperBound: Int) -> Int
+    {
+        return Int(arc4random_uniform(UInt32(upperBound)))
+    }
 }
 
 extension MKMapView

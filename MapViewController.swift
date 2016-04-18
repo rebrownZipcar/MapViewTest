@@ -42,6 +42,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
     }
 
     let defaultAddressLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(42.351274, -71.047286)
+    let doAddLocationObj = doAddLocation()
+    var doNewLocation = false
 
     // MARK: Outlets
 
@@ -86,6 +88,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
 
         self.mapViewModel.mapView = self.mapView
         self.mapViewModel.addressLocation = self.startingLocation
+
+        doAddLocationObj.adding.subscribe(addLocation)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleNewLocationTap(_:)))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
     }
 
     func updateAttributes ()
@@ -127,6 +135,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
         self.locateMeButton.hidden = !appDefaults.locateMe
         self.locationSearchButton.hidden = !appDefaults.locationButton
         self.locateSearchBar.hidden = !appDefaults.locationSearchBar
+    }
+
+    func addLocation (oldValue: Bool, newValue: Bool) -> ()
+    {
+        doNewLocation = true
+    }
+
+    func handleNewLocationTap (sender:UITapGestureRecognizer)
+    {
+        if doNewLocation && sender.state == .Ended
+        {
+            let touchLocation = sender.locationInView(sender.view)
+            let touchCoord = mapView.convertPoint(touchLocation, toCoordinateFromView: mapView)
+
+            self.mapViewModel.addNewLocationToModel(touchCoord)
+            doNewLocation = false
+        }
     }
 
     override func viewDidAppear(animated: Bool)

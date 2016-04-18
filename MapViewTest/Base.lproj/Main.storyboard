@@ -30,6 +30,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="hjg-Cd-IRk">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="BS2-6Q-HCd">
+                            <connections>
+                                <action selector="addLocationAction:" destination="0KO-1f-o30" id="HOo-D1-kef"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Settings" id="1PK-9q-51q">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -38,6 +43,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addLocationOutlet" destination="BS2-6Q-HCd" id="dzQ-Mq-jv4"/>
                         <outlet property="ourTableView" destination="LgQ-1D-3Ho" id="NnX-37-oxD"/>
                     </connections>
                 </tableViewController>
@@ -221,6 +227,40 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Location Search" id="0sd-RQ-DGN" userLabel="Test Options">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UTF-tE-qA5">
+                                        <rect key="frame" x="0.0" y="433.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UTF-tE-qA5" id="OLS-To-ACC">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include Add Location Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTs-2C-sjC">
+                                                    <rect key="frame" x="8" y="11" width="527" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IyD-Fw-T9n">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="locationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="x1b-RO-QpN"/>
+                                                        <action selector="useAddLocationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="cye-C8-WOc"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qTs-2C-sjC" firstAttribute="centerY" secondItem="IyD-Fw-T9n" secondAttribute="centerY" id="2pr-sb-aCa"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="qTs-2C-sjC" secondAttribute="leading" id="7Xj-kF-Aqh"/>
+                                                <constraint firstItem="qTs-2C-sjC" firstAttribute="centerY" secondItem="OLS-To-ACC" secondAttribute="centerY" id="dJS-UX-oxl"/>
+                                                <constraint firstItem="IyD-Fw-T9n" firstAttribute="leading" secondItem="qTs-2C-sjC" secondAttribute="trailing" constant="8" id="fze-7J-cGg"/>
+                                                <constraint firstItem="IyD-Fw-T9n" firstAttribute="trailing" secondItem="OLS-To-ACC" secondAttribute="trailingMargin" id="kKt-eo-MGg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="5zg-Hl-SWb" id="fU8-Bv-N6O"/>
@@ -233,6 +273,7 @@
                         <outlet property="locationButtonOutlet" destination="DBE-Lw-spf" id="MyW-EG-0Oh"/>
                         <outlet property="locationSearchBarOutlet" destination="NCY-Ap-5rs" id="mI7-rU-pJr"/>
                         <outlet property="tripsButtonsOutlet" destination="zFq-Kv-09l" id="WEo-Cr-SId"/>
+                        <outlet property="useAddLocationOutlet" destination="IyD-Fw-T9n" id="saL-Lq-rSo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zEP-6O-FMN" userLabel="First Responder" sceneMemberID="firstResponder"/>

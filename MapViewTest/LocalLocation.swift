@@ -77,7 +77,7 @@ class LocalLocations
     }
 
         // This would be populated normally as the result of a server call.
-    private let locations =
+    private let initialLocationData =
         [
             LocalLocation (locationId: 96027, lat: 42.3481, long: -71.0743, vehicleCount: 2),
             LocalLocation (locationId: 96132, lat: 42.3626, long: -71.0592, vehicleCount: 17),
@@ -87,6 +87,7 @@ class LocalLocations
             LocalLocation (locationId: 96135, lat: 40.7455, long: -74.0261, vehicleCount: 0)
         ]
 
+    private var locations: [LocalLocation] = []
     private static let database : Dictionary<Int, LocalLocation> =
         {
             var theDatabase = Dictionary<Int, LocalLocation>()
@@ -97,6 +98,19 @@ class LocalLocations
             }
             return theDatabase
     }()
+
+    func setInitialLocations ()
+    {
+        for loc in initialLocationData
+        {
+            addLocation (loc)
+        }
+    }
+
+    func addLocation (inLoc: LocalLocation)
+    {
+        locations.append(inLoc )
+    }
 
     func populateLocations (centerCoordinate: CLLocationCoordinate2D, usageType: LocalLocationUsageTypes = .Unified)
     {

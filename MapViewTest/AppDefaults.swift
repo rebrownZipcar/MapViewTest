@@ -17,6 +17,8 @@ class AppDefaults : NSUserDefaults
         static let locationButton = "locationButton"
         static let locationSearchBar = "locationSearchBar"
         static let locateMe = "locateMe"
+        static let addLocations = "addLocations"
+        static let hasInitedLocations = "initedLocations"
     }
 
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -98,7 +100,7 @@ class AppDefaults : NSUserDefaults
     }
 
     var locateMe: Bool
-        {
+    {
         set
         {
             defaults.setBool(newValue, forKey: attributeConstants.locateMe)
@@ -112,6 +114,44 @@ class AppDefaults : NSUserDefaults
             }
 
             defaults.setBool(true, forKey: attributeConstants.locateMe)
+            return true
+        }
+    }
+
+    var doAddLocations: Bool
+    {
+        set
+        {
+            defaults.setBool(newValue, forKey: attributeConstants.addLocations)
+        }
+
+        get
+        {
+            if let hasDefault: Bool? = defaults.boolForKey(attributeConstants.addLocations)
+            {
+                return hasDefault!
+            }
+
+            defaults.setBool(true, forKey: attributeConstants.addLocations)
+            return true
+        }
+    }
+
+    var hasInitedLocations: Bool
+    {
+        set
+        {
+            defaults.setBool(newValue, forKey: attributeConstants.hasInitedLocations)
+        }
+
+        get
+        {
+            if let hasDefault: Bool? = defaults.boolForKey(attributeConstants.hasInitedLocations)
+            {
+                return hasDefault!
+            }
+
+            defaults.setBool(true, forKey: attributeConstants.hasInitedLocations)
             return true
         }
     }

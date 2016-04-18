@@ -9,11 +9,18 @@
 import UIKit
 import MapKit
 
+class doAddLocation
+{
+    var adding = Observable(true)
+}
+
 class TestViewController: UITableViewController
 {
-    @IBOutlet var ourTableView: UITableView!
     var tableHeader: MapViewController!
     var locationModel = LocalLocations.sharedInstance
+
+    @IBOutlet var ourTableView: UITableView!
+    @IBOutlet weak var addLocationOutlet: UIBarButtonItem!
 
     override func viewDidLoad()
     {
@@ -32,6 +39,8 @@ class TestViewController: UITableViewController
             self.tableHeader = mapVC
             self.ourTableView.tableHeaderView = self.tableHeader.view
         }
+
+        addLocationOutlet.enabled = AppDefaults().doAddLocations
     }
 
     override func viewDidAppear (animated: Bool)
@@ -39,6 +48,11 @@ class TestViewController: UITableViewController
         super.viewDidAppear(animated)
         self.tableHeader.viewDidAppear(animated)
         refresh()
+    }
+
+    @IBAction func addLocationAction(sender: UIBarButtonItem)
+    {
+        tableHeader.doAddLocationObj.adding.value = true
     }
 
     // MARK: - Table view data source
