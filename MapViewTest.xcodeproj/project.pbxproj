@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9219A4DB1CC1433E005B24DB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9219A4DA1CC1433E005B24DB /* Observable.swift */; };
 		9278ADA31CAC179A006B945D /* MapCalloutViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */; };
 		9278ADA51CAC1BD4006B945D /* MapCalloutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */; };
 		929B1B0A1CB690EB001E5E3F /* AttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929B1B091CB690EB001E5E3F /* AttributesViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9219A4DA1CC1433E005B24DB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapCalloutViewController.storyboard; sourceTree = "<group>"; };
 		9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCalloutViewController.swift; sourceTree = "<group>"; };
 		929B1B091CB690EB001E5E3F /* AttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				92F5B7DB1CB2D0090054322E /* Storyboards */,
 				929B1B091CB690EB001E5E3F /* AttributesViewController.swift */,
 				929B1B0B1CB692F2001E5E3F /* AppDefaults.swift */,
+				9219A4DA1CC1433E005B24DB /* Observable.swift */,
 			);
 			path = MapViewTest;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				92F5B7D51CAEF84F0054322E /* TripIndicatorViewController.swift in Sources */,
 				9278ADA51CAC1BD4006B945D /* MapCalloutViewController.swift in Sources */,
 				92FFDB671CA4071B006C22BF /* TestViewController.swift in Sources */,
+				9219A4DB1CC1433E005B24DB /* Observable.swift in Sources */,
 				92FFDB651CA4071B006C22BF /* AppDelegate.swift in Sources */,
 				929B1B0A1CB690EB001E5E3F /* AttributesViewController.swift in Sources */,
 				929B1B0C1CB692F2001E5E3F /* AppDefaults.swift in Sources */,

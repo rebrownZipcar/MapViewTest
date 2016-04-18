@@ -24,28 +24,10 @@ extension MKPointAnnotation
         set { }
     }
 }
-//
-//    var pinImage: UIImage?
-//    {
-//        get
-//        {
-//            return nil
-//        }
-//    }
-//
-//}
 
-protocol pinImage: UIImage {}
-
-protocol customAnnotation
+class allAnnotation: MKPointAnnotation//, customAnnotation
 {
-    typealias IM: pinImage
-    func getPinImage() -> IM
-}
-
-class allAnnotation: MKPointAnnotation, customAnnotation
-{
-    func getPinImage()
+    var pinImage: UIImage?
     {
         return nil
     }
@@ -55,10 +37,7 @@ class VehicleAvailAnnotation: allAnnotation
 {
     override var pinImage: UIImage?
     {
-        get
-        {
-            return UIImage(named: "greenpin")
-        }
+        return UIImage(named: "greenpin")
     }
 
 }
@@ -67,10 +46,7 @@ class NoVehicleAvailAnnotation: allAnnotation
 {
     override var pinImage: UIImage?
     {
-        get
-        {
-            return UIImage(named: "graypin")
-        }
+        return UIImage(named: "graypin")
     }
     
 }
@@ -99,6 +75,12 @@ extension CLLocationCoordinate2D
     }
 }
 
+let greenwich = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+
+class Address
+{
+    var changed = Observable(greenwich)
+}
 ///•• changes for toolbar, trip type need to be handled here. 
 ///•• Also need to inform MapViewController when zoom/maprgn changes, to show redo search btn.
 
@@ -108,24 +90,16 @@ class MapViewModel: NSObject
 //    var mvmDelegate: MapViewModelDelegate?
 
     var mapRadius = 0.05
-    var allowPinDraw = false
+    var allowPinDraw = true
+
+    // KVO mechanism
+    let addressObj = Address()
 
     var addressLocation: CLLocationCoordinate2D?
     {
         didSet
         {
-            if addressLocation!.latitude == 0 && addressLocation!.longitude == 0
-            {
-                locateMe ()
-            }
-
-            if allowPinDraw
-            {
-                self.generatePins ()
-            }
-
-            self.mapView?.centerCoordinate = addressLocation!
-            self.mapView?.region = MKCoordinateRegionMake (addressLocation!, MKCoordinateSpanMake(mapRadius, mapRadius))
+            addressObj.changed.value = addressLocation!
         }
     }
 
@@ -135,6 +109,30 @@ class MapViewModel: NSObject
     ///  for the current map region.
     var locations = LocalLocations.sharedInstance
 
+
+    override init()
+    {
+        super.init()
+
+        addressObj.changed.subscribe(addressChangedHandler)
+    }
+
+    func addressChangedHandler (oldValue: CLLocationCoordinate2D, newValue: CLLocationCoordinate2D) -> ()
+    {
+        if newValue.latitude == 0 && newValue.longitude == 0
+        {
+            locateMe ()
+        }
+
+        if allowPinDraw
+        {
+            self.generatePins ()
+        }
+
+        self.mapView?.centerCoordinate = newValue
+        self.mapView?.region = MKCoordinateRegionMake (addressLocation!, MKCoordinateSpanMake(mapRadius, mapRadius))
+
+    }
     /// This assumes pattern of either round trip or one way locations. Not sure how unified search affects individual locations.
     ///
     func changeTripType (isOneWay: Bool)
@@ -192,12 +190,6 @@ class MapViewModel: NSObject
             lastCenter = mapView.region.center
         }
     }
-
-//    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
-//    {
-////        return mapView.configureOverlay (overlay)
-//    }
-//
 
     func viewForAnnotation (annotation: MKAnnotation) -> MKAnnotationView?
     {

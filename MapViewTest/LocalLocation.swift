@@ -55,13 +55,6 @@ struct LocalLocation
      var minLength: Double = 0.0
      var alwaysOpen: Bool = false
 */
-    init (locationId: Int, latitude: Double, longitude: Double, vCount: Int)
-    {
-        self.locationId = locationId
-        self.lat  = latitude
-        self.long = longitude
-        self.vehicleCount = vCount
-    }
 }
 
 // Singleton
@@ -86,17 +79,12 @@ class LocalLocations
         // This would be populated normally as the result of a server call.
     private let locations =
         [
-//            LocalLocation (locationId: 1, latitude: 42.3617552, longitude: -71.0599091, vCount: 1),
-//            LocalLocation (locationId: 2, latitude: 42.3617562, longitude: -71.0599081, vCount: 2),
-//            LocalLocation (locationId: 3, latitude: 42.3617572, longitude: -71.0599071, vCount: 3),
-//            LocalLocation (locationId: 4, latitude: 42.3617582, longitude: -71.0599061, vCount: 4)
-//
-            LocalLocation (locationId: 96027, latitude: 42.3481, longitude: -71.0743, vCount: 2),
-            LocalLocation (locationId: 96132, latitude: 42.3626, longitude: -71.0592, vCount: 17),
-            LocalLocation (locationId: 95931, latitude: 42.3624, longitude: -71.0687, vCount: 3),
-            LocalLocation (locationId: 96006, latitude: 42.3334, longitude: -71.1171, vCount: 0),
-            LocalLocation (locationId: 96054, latitude: 42.3643, longitude: -71.0508, vCount: 1),
-            LocalLocation (locationId: 96135, latitude: 40.7455, longitude: -74.0261, vCount: 0)
+            LocalLocation (locationId: 96027, lat: 42.3481, long: -71.0743, vehicleCount: 2),
+            LocalLocation (locationId: 96132, lat: 42.3626, long: -71.0592, vehicleCount: 17),
+            LocalLocation (locationId: 95931, lat: 42.3624, long: -71.0687, vehicleCount: 3),
+            LocalLocation (locationId: 96006, lat: 42.3334, long: -71.1171, vehicleCount: 0),
+            LocalLocation (locationId: 96054, lat: 42.3643, long: -71.0508, vehicleCount: 1),
+            LocalLocation (locationId: 96135, lat: 40.7455, long: -74.0261, vehicleCount: 0)
         ]
 
     private static let database : Dictionary<Int, LocalLocation> =
