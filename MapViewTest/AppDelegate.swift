@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         self.setupLocation()
+        GMSServices.provideAPIKey("AIzaSyCJ4Rw14xml4P34iO8Ck9MT2juog6ivSRw")
         return true
     }
 

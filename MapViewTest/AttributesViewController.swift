@@ -43,12 +43,25 @@ class AttributesViewController: UITableViewController
         appDefaults.doAddLocations = sender.on
     }
 
+    @IBAction func useAppleMapsButton(sender: UISwitch)
+    {
+        appDefaults.useAppleMaps = sender.on
+    }
+
+    @IBAction func useGoogleMaps(sender: UISwitch)
+    {
+        appDefaults.useGoogleMaps = sender.on
+    }
+
     @IBOutlet weak var tripsButtonsOutlet: UISwitch!
     @IBOutlet weak var filterToolsOutlet: UISwitch!
     @IBOutlet weak var locationButtonOutlet: UISwitch!
     @IBOutlet weak var locationSearchBarOutlet: UISwitch!
     @IBOutlet weak var locateMeOutlet: UISwitch!
     @IBOutlet weak var useAddLocationOutlet: UISwitch!
+    @IBOutlet weak var useAppleMapsOutlet: UISwitch!
+    @IBOutlet weak var useGoogleMapsOutlet: UISwitch!
+
 
     override func viewDidLoad ()
     {
@@ -61,5 +74,7 @@ class AttributesViewController: UITableViewController
         locationSearchBarOutlet.on = self.appDefaults.locationSearchBar
         locateMeOutlet.on = self.appDefaults.locateMe
         useAddLocationOutlet.on = self.appDefaults.doAddLocations
+        useAppleMapsOutlet.on = self.appDefaults.useAppleMaps
+        useGoogleMapsOutlet.on = self.appDefaults.useGoogleMaps
     }
 }

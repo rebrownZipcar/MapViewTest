@@ -19,7 +19,20 @@ class AppDefaults : NSUserDefaults
         static let locateMe = "locateMe"
         static let addLocations = "addLocations"
         static let hasInitedLocations = "initedLocations"
+        static let enableAppleMaps = "useAppleMaps"
+        static let enableGoogleMaps = "useGoogleMaps"
     }
+
+    let registrationDict = [attributeConstants.tripsButtons: false,
+                            attributeConstants.toolBarFilter: false,
+                            attributeConstants.locationButton: true,
+                            attributeConstants.locationSearchBar: false,
+                            attributeConstants.locateMe: false,
+                            attributeConstants.addLocations: false,
+                            attributeConstants.hasInitedLocations: true,
+                            attributeConstants.enableAppleMaps: true,
+                            attributeConstants.enableGoogleMaps: false]
+
 
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -75,7 +88,7 @@ class AppDefaults : NSUserDefaults
                 return hasDefault!
             }
 
-            defaults.setBool(false, forKey: attributeConstants.locationButton)
+            defaults.setBool(true, forKey: attributeConstants.locationButton)
             return false
         }
     }
@@ -156,4 +169,41 @@ class AppDefaults : NSUserDefaults
         }
     }
 
+    var useAppleMaps: Bool
+    {
+        set
+        {
+            defaults.setBool(newValue, forKey: attributeConstants.enableAppleMaps)
+        }
+
+        get
+        {
+            if let hasDefault: Bool? = defaults.boolForKey(attributeConstants.enableAppleMaps)
+            {
+                return hasDefault!
+            }
+
+            defaults.setBool(true, forKey: attributeConstants.enableAppleMaps)
+            return true
+        }
+    }
+
+    var useGoogleMaps: Bool
+        {
+        set
+        {
+            defaults.setBool(newValue, forKey: attributeConstants.enableGoogleMaps)
+        }
+
+        get
+        {
+            if let hasDefault: Bool? = defaults.boolForKey(attributeConstants.enableGoogleMaps)
+            {
+                return hasDefault!
+            }
+
+            defaults.setBool(false, forKey: attributeConstants.enableGoogleMaps)
+            return true
+        }
+    }
 }

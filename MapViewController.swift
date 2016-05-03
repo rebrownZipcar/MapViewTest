@@ -2,8 +2,7 @@
 //  MapViewController.swift
 //  zipcar
 //
-//  Created by Allen Wong on 4/17/15.
-//  Copyright (c) 2015 Zipcar, Inc. All rights reserved.
+//  Copyright (c) 2016 Zipcar, Inc. All rights reserved.
 //
 
 import UIKit
@@ -42,7 +41,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
     }
 
     let defaultAddressLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(42.351274, -71.047286)
-    let doAddLocationObj = doAddLocation()
+    var doAddLocationObj = doAddLocation(add: true)
     var doNewLocation = false
 
     // MARK: Outlets
@@ -59,8 +58,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
 
     @IBAction func searchLocationTappedButton(sender: UIButton)
     {
-//        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: false)
-//        instantiateViewControllerWithIdentifier("searchLocationsTableViewController")
+        mapView.deselectAnnotation(mapView.selectedAnnotations.first, animated: false)
     }
 
     @IBAction func locationMePressedButton(sender: UIButton)
@@ -87,7 +85,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
         super.viewDidLoad()
 
         self.mapViewModel.mapView = self.mapView
-        self.mapViewModel.addressLocation = self.startingLocation
+        self.mapViewModel.addressLocation = self.startingLocation!
 
         doAddLocationObj.adding.subscribe(addLocation)
 
@@ -99,6 +97,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
     func updateAttributes ()
     {
         let appDefaults = AppDefaults()
+        appDefaults.registerDefaults(appDefaults.registrationDict)
 
         if appDefaults.toolBarFilter
         {
@@ -160,7 +159,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
 
         loadLocationInformation()
         mapView.delegate = self
-//        self.mapViewModel.setupDelegate()
         updateAttributes()
     }
 
@@ -200,6 +198,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
         {
             self.tripIndicatorVC = destination as? TripIndicatorViewController
             self.tripIndicatorVC?.delegate = self
+        }
+
+        if segue.identifier == "locationSearchViewController", let navVC = destination as? UINavigationController
+        {
+            if let locVC = navVC.viewControllers[0] as? LocationSearchViewController
+            {
+                locVC.currentLocation = mapViewModel.addressLocation
+                locVC.currentRgn = self.mapView.region
+                locVC.parentVC = self
+            }
         }
     }
 

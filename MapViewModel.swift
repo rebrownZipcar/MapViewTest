@@ -11,10 +11,13 @@
 import Foundation
 import UIKit
 import MapKit
+import CoreData
+import JSQCoreDataKit
+import Observable
 
 extension MKPointAnnotation
 {
-    var loc: LocalLocation?
+    var loc: Location?
     {
         get
         {
@@ -92,6 +95,8 @@ class MapViewModel: NSObject
     var mapRadius = 0.05
     var allowPinDraw = true
 
+    var stack: CoreDataStack!
+
     // KVO mechanism
     let addressObj = Address()
 
@@ -107,7 +112,7 @@ class MapViewModel: NSObject
 
     /// View model owns the model. In a real world version of this, the model locations should be set or updated
     ///  for the current map region.
-    var locations = LocalLocations.sharedInstance
+    //var locations = LocalLocations.sharedInstance
 
     override init()
     {
@@ -115,10 +120,18 @@ class MapViewModel: NSObject
 
         addressObj.changed.subscribe(addressChangedHandler)
 
+        let model = CoreDataModel(name: modelName, bundle: modelBundle)
+        let factory = CoreDataStackFactory(model: model)
+        let result = factory.createStack()
+        stack = result.stack()!
+
         if AppDefaults().hasInitedLocations == false
         {
-            locations.setInitialLocations()
+//            locations.setInitialLocations()
+            Location.setInitialLocations(stack.mainContext)
+            AppDefaults().hasInitedLocations = true
         }
+
     }
 
     func addressChangedHandler (oldValue: CLLocationCoordinate2D, newValue: CLLocationCoordinate2D) -> ()
@@ -143,13 +156,17 @@ class MapViewModel: NSObject
     func changeTripType (isOneWay: Bool)
     {
         /// Pass LocationService as a way of method injection. Unit test can use a fake service.
-        locations.populateLocations (addressLocation!, usageType: (isOneWay == true ? .OneWay : .RoundTrip))
+//        locations.populateLocations (addressLocation!, usageType: (isOneWay == true ? .OneWay : .RoundTrip))
     }
 
     func addNewLocationToModel (newPt: CLLocationCoordinate2D)
     {
-        let newLoc = LocalLocation(locationId: getRandomNumber(1000000), lat: newPt.latitude, long: newPt.longitude, vehicleCount: getRandomNumber(10))
-        locations.addLocation(newLoc)
+//        let newLoc = LocalLocation(locationId: getRandomNumber(1000000), lat: newPt.latitude, long: newPt.longitude, vehicleCount: getRandomNumber(10))
+//        locations.addLocation(newLoc)
+
+        let _ = Location.newLocation(self.stack.mainContext, id: Int32(getRandomNumber(1000000)), latitude: newPt.latitude, longitude: newPt.longitude, vehicles: Int16(getRandomNumber(10)))
+        saveContext(self.stack.mainContext)
+
         generatePins()
     }
 
@@ -256,13 +273,14 @@ class MapViewModel: NSObject
 //        mapView.removeAnnotations(mapView.annotations.filter({ (object) -> Bool in
 //            return object is CustomAnno
 //        }))
-        if let locMapView = self.mapView
+        if let locMapView = self.mapView, stk = self.stack
         {
             locMapView.removeAnnotations(locMapView.annotations)
 
             do
             {
-                let results = try locations.getLocationsInRange (locMapView.region.center, radius: locMapView.getRegionRadius())
+                let results = try Location.getLocationsInRange (stk.mainContext, centerCoordinate: locMapView.region.center, radius: locMapView.getRegionRadius())
+//                let results = try locations.getLocationsInRange (locMapView.region.center, radius: locMapView.getRegionRadius())
 
                 for location in results
                 {
@@ -277,10 +295,11 @@ class MapViewModel: NSObject
         }
     }
 
-    func createAnnotationForLocalLocation (localLocation: LocalLocation) -> MKPointAnnotation
+    func createAnnotationForLocalLocation (localLocation: Location) -> MKPointAnnotation
+//    func createAnnotationForLocalLocation (localLocation: LocalLocation) -> MKPointAnnotation
     {
-        let annotation           = localLocation.vehicleCount > 0 ? VehicleAvailAnnotation() : NoVehicleAvailAnnotation()
-        annotation.coordinate    = CLLocationCoordinate2DMake(localLocation.lat, localLocation.long)
+        let annotation           = localLocation.vehicleCount?.intValue > 0 ? VehicleAvailAnnotation() : NoVehicleAvailAnnotation()
+        annotation.coordinate    = CLLocationCoordinate2DMake((localLocation.latitude!.doubleValue), localLocation.longitude!.doubleValue)
         annotation.title         = "This place"
         annotation.subtitle      = "here"
         annotation.loc           = localLocation
@@ -288,44 +307,8 @@ class MapViewModel: NSObject
         return annotation
     }
 
-    func getCallout (localLocation: LocalLocation) -> MapCalloutViewController?
+    func getCallout (localLocation: Location) -> MapCalloutViewController?
     {
-//        struct Holder
-//        {
-//            static let callout = SMCalloutView.platformCalloutView()
-//        }
-
-//        selectedLocalLocation?(localLocation: localLocation)
-//        Holder.callout.delegate  = self
-//        self.mapView.calloutView = Holder.callout
-
-        //        let storyboard = UIStoryboard(name: "MapCalloutViewController", bundle: NSBundle.mainBundle())
-        //        let calloutView = storyboard.instantiateViewControllerWithIdentifier("mapCalloutView") as! MapCalloutViewController
-
-        //calloutView.view.frame           = CGRect(x: 0, y: 0, width: 240, height: 53)
-//        Holder.callout.contentView       = calloutView.view
-
-        //        calloutView.displayLocationInfo (localLocation)
-
-//        if oneWaySearch
-//        {
-//            calloutView.displayOneWaySearchLocation(localLocation)
-//        }
-//        else if oneWayDropOff
-//        {
-//            calloutView.displayOneWayDropOffLocation(localLocation)
-//        }
-//        else if dataSource.displayCarsCount()
-//        {
-//            calloutView.displayRoundTripWithCarsCount(localLocation)
-//        }
-//        else
-//        {
-//            calloutView.displayRoundTripWithOutCarsCount(localLocation)
-//        }
-
-//        return Holder.callout
-//        return calloutView
         return nil
     }
 

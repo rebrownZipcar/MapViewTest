@@ -236,13 +236,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include Add Location Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTs-2C-sjC">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include Add Location Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTs-2C-sjC">
                                                     <rect key="frame" x="8" y="11" width="527" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IyD-Fw-T9n">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IyD-Fw-T9n">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="locationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="x1b-RO-QpN"/>
@@ -261,6 +261,72 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Map Places APIs" id="b8U-pp-Eu4" userLabel="Test Options">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Ztk-Ku-zVn">
+                                        <rect key="frame" x="0.0" y="527.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ztk-Ku-zVn" id="PNA-a5-EUh">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Apple Maps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMi-iY-hLr">
+                                                    <rect key="frame" x="8" y="11" width="527" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ITD-hf-49r">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="locationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="Lw0-VN-9jf"/>
+                                                        <action selector="useAddLocationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="shF-1b-ggA"/>
+                                                        <action selector="useAppleMapsButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="f5c-ea-ese"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="PMi-iY-hLr" secondAttribute="leading" id="7p4-fU-1ea"/>
+                                                <constraint firstItem="ITD-hf-49r" firstAttribute="leading" secondItem="PMi-iY-hLr" secondAttribute="trailing" constant="8" id="GaX-mX-0Mv"/>
+                                                <constraint firstItem="PMi-iY-hLr" firstAttribute="centerY" secondItem="ITD-hf-49r" secondAttribute="centerY" id="YUE-Sx-sBU"/>
+                                                <constraint firstItem="ITD-hf-49r" firstAttribute="trailing" secondItem="PNA-a5-EUh" secondAttribute="trailingMargin" id="Zma-y0-h3M"/>
+                                                <constraint firstItem="PMi-iY-hLr" firstAttribute="centerY" secondItem="PNA-a5-EUh" secondAttribute="centerY" id="yXH-Zr-Aym"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="R7m-HN-PLK">
+                                        <rect key="frame" x="0.0" y="571.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R7m-HN-PLK" id="Qym-tO-3Q6">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Google Maps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omy-ih-Y00">
+                                                    <rect key="frame" x="8" y="11" width="527" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tk7-ZA-o6e">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="locationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="b9S-Bh-2xf"/>
+                                                        <action selector="useAddLocationButton:" destination="5zg-Hl-SWb" eventType="valueChanged" id="EvR-E3-jLm"/>
+                                                        <action selector="useGoogleMaps:" destination="5zg-Hl-SWb" eventType="valueChanged" id="dPg-A4-Frx"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="omy-ih-Y00" firstAttribute="centerY" secondItem="tk7-ZA-o6e" secondAttribute="centerY" id="12h-It-Qkm"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="omy-ih-Y00" secondAttribute="leading" id="3B2-1T-8Z8"/>
+                                                <constraint firstItem="tk7-ZA-o6e" firstAttribute="leading" secondItem="omy-ih-Y00" secondAttribute="trailing" constant="8" id="Ew4-sa-LJV"/>
+                                                <constraint firstItem="omy-ih-Y00" firstAttribute="centerY" secondItem="Qym-tO-3Q6" secondAttribute="centerY" id="jmY-3U-qMn"/>
+                                                <constraint firstItem="tk7-ZA-o6e" firstAttribute="trailing" secondItem="Qym-tO-3Q6" secondAttribute="trailingMargin" id="lJD-8j-dgz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="5zg-Hl-SWb" id="fU8-Bv-N6O"/>
@@ -268,17 +334,19 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="UseGoogleMapsOutlet" destination="tk7-ZA-o6e" id="fak-6T-uiS"/>
                         <outlet property="filterToolsOutlet" destination="n5C-2M-8ct" id="B1l-IZ-HH5"/>
                         <outlet property="locateMeOutlet" destination="Fdg-9b-1b5" id="7Ji-Sb-V0S"/>
                         <outlet property="locationButtonOutlet" destination="DBE-Lw-spf" id="MyW-EG-0Oh"/>
                         <outlet property="locationSearchBarOutlet" destination="NCY-Ap-5rs" id="mI7-rU-pJr"/>
                         <outlet property="tripsButtonsOutlet" destination="zFq-Kv-09l" id="WEo-Cr-SId"/>
                         <outlet property="useAddLocationOutlet" destination="IyD-Fw-T9n" id="saL-Lq-rSo"/>
+                        <outlet property="useAppleMapsOutlet" destination="ITD-hf-49r" id="2K5-sm-ChJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zEP-6O-FMN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2414" y="436"/>
+            <point key="canvasLocation" x="2515" y="434"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J5G-Uh-Iak">

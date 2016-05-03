@@ -8,11 +8,18 @@
 
 import UIKit
 import MapKit
+import Observable
 
-class doAddLocation
+struct doAddLocation
 {
-    var adding = Observable(true)
+    var adding: Observable<Bool>
+
+    init (add: Bool)
+    {
+        self.adding = Observable(add)
+    }
 }
+
 
 class TestViewController: UITableViewController
 {
@@ -35,7 +42,6 @@ class TestViewController: UITableViewController
         if let mapVC = storyboard.instantiateViewControllerWithIdentifier("mapViewController") as? MapViewController
         {
             mapVC.startingLocation = addressLocation
-
             self.tableHeader = mapVC
             self.ourTableView.tableHeaderView = self.tableHeader.view
         }
