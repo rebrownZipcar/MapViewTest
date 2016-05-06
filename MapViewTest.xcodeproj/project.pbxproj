@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		914CE065E8755B7625CC0363 /* Pods_MapViewTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5767042742EBF284272F0D83 /* Pods_MapViewTest.framework */; };
+		920842A21CD923A500C627EF /* GMapPlacesFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920842A11CD923A500C627EF /* GMapPlacesFilterViewController.swift */; };
+		921C51B91CDCC93C00A5E5B2 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921C51B81CDCC93C00A5E5B2 /* LocationModel.swift */; };
+		921C51BB1CDCCBE400A5E5B2 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921C51BA1CDCCBE400A5E5B2 /* DataHelper.swift */; };
 		9228D4731CC814F80075AC9B /* SavedLocationAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9228D4721CC814F80075AC9B /* SavedLocationAddresses.swift */; };
+		926B0EB11CD928EB00FCB609 /* GMapsFilterSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926B0EB01CD928EB00FCB609 /* GMapsFilterSetting.swift */; };
+		926B0EB41CD92AFF00FCB609 /* GMapPlacesFilterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926B0EB31CD92AFF00FCB609 /* GMapPlacesFilterPresenter.swift */; };
 		9276EDC21CD3E7BE00C9188D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276EDC11CD3E7BE00C9188D /* Observable.swift */; };
 		9278ADA31CAC179A006B945D /* MapCalloutViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */; };
 		9278ADA51CAC1BD4006B945D /* MapCalloutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */; };
@@ -65,12 +70,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		927F71891CC6779300538566 /* PBXContainerItemProxy */ = {
+		921C51BF1CDCD07F00A5E5B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 927F71841CC6779300538566 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D84910E7F1E4C534AAF3C7F86EEDC6BD;
-			remoteInfo = JSQCoreDataKit;
+			remoteGlobalIDString = BF54641C22259310A9F036B79D7ED93A;
+			remoteInfo = MagicalRecord;
 		};
 		927F718B1CC6779300538566 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -78,13 +83,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 68B8AEE16BFB0E3C90963C8D25EAAE26;
 			remoteInfo = "Pods-MapViewTest";
-		};
-		92C0458A1CD28B4100864084 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 927F71841CC6779300538566 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 857110E74591379912D7201DE27B025B;
-			remoteInfo = "Observable-Swift";
 		};
 		92FFDB761CA4071B006C22BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -98,7 +96,12 @@
 /* Begin PBXFileReference section */
 		470741D74A490A5A452754DF /* Pods-MapViewTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapViewTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapViewTest/Pods-MapViewTest.debug.xcconfig"; sourceTree = "<group>"; };
 		5767042742EBF284272F0D83 /* Pods_MapViewTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapViewTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920842A11CD923A500C627EF /* GMapPlacesFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMapPlacesFilterViewController.swift; sourceTree = "<group>"; };
+		921C51B81CDCC93C00A5E5B2 /* LocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		921C51BA1CDCCBE400A5E5B2 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 		9228D4721CC814F80075AC9B /* SavedLocationAddresses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedLocationAddresses.swift; sourceTree = "<group>"; };
+		926B0EB01CD928EB00FCB609 /* GMapsFilterSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMapsFilterSetting.swift; sourceTree = "<group>"; };
+		926B0EB31CD92AFF00FCB609 /* GMapPlacesFilterPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMapPlacesFilterPresenter.swift; sourceTree = "<group>"; };
 		9276EDC11CD3E7BE00C9188D /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		9278ADA21CAC179A006B945D /* MapCalloutViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapCalloutViewController.storyboard; sourceTree = "<group>"; };
 		9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCalloutViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +122,6 @@
 		92F5B7D41CAEF84F0054322E /* TripIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripIndicatorViewController.swift; sourceTree = "<group>"; };
 		92FB1A2A1CCE47640062561C /* MapView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapView.storyboard; sourceTree = "<group>"; };
 		92FB1A511CCE8A210062561C /* MapViewTest GoogleMaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MapViewTest GoogleMaps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		92FB1A521CCE8A210062561C /* MapViewTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MapViewTest copy-Info.plist"; path = "/Users/rebrown/dev/MapViewTest/MapViewTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		92FFDB611CA4071B006C22BF /* MapViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FFDB641CA4071B006C22BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92FFDB661CA4071B006C22BF /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -175,8 +177,10 @@
 			isa = PBXGroup;
 			children = (
 				927F717D1CC57A0100538566 /* location.xcdatamodeld */,
+				921C51B81CDCC93C00A5E5B2 /* LocationModel.swift */,
 				927F71811CC668F000538566 /* Location.swift */,
 				927F719A1CC7D7F400538566 /* SearchLocationModel.swift */,
+				926B0EB01CD928EB00FCB609 /* GMapsFilterSetting.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -184,8 +188,7 @@
 		927F71851CC6779300538566 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				927F718A1CC6779300538566 /* JSQCoreDataKit.framework */,
-				92C0458B1CD28B4100864084 /* Observable.framework */,
+				921C51C01CDCD07F00A5E5B2 /* MagicalRecord.framework */,
 				927F718C1CC6779300538566 /* Pods_MapViewTest.framework */,
 			);
 			name = Products;
@@ -230,7 +233,6 @@
 				C3A5AB3D03ADA7047545537A /* Pods */,
 				71A1A8F842D3FD27994AB9AC /* Frameworks */,
 				927F71841CC6779300538566 /* Pods.xcodeproj */,
-				92FB1A521CCE8A210062561C /* MapViewTest copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -249,7 +251,8 @@
 			children = (
 				92FFDB641CA4071B006C22BF /* AppDelegate.swift */,
 				929B1B091CB690EB001E5E3F /* AttributesViewController.swift */,
-				92FFDB661CA4071B006C22BF /* TestViewController.swift */,
+				920842A11CD923A500C627EF /* GMapPlacesFilterViewController.swift */,
+				926B0EB31CD92AFF00FCB609 /* GMapPlacesFilterPresenter.swift */,
 				92A940781CAD578300C68D30 /* LocationManager.swift */,
 				92FFDB8A1CA41724006C22BF /* LocalLocation.swift */,
 				92A893B01CD3BFCE00542040 /* LocationSearchTableCell.swift */,
@@ -259,6 +262,7 @@
 				92FFDB861CA416FC006C22BF /* MapViewModel.swift */,
 				9278ADA41CAC1BD4006B945D /* MapCalloutViewController.swift */,
 				9276EDC11CD3E7BE00C9188D /* Observable.swift */,
+				92FFDB661CA4071B006C22BF /* TestViewController.swift */,
 				92F5B7D21CAED3570054322E /* ToolBarViewController.swift */,
 				92F5B7D41CAEF84F0054322E /* TripIndicatorViewController.swift */,
 				92F5B7E21CB302670054322E /* Resources */,
@@ -267,6 +271,7 @@
 				929B1B0B1CB692F2001E5E3F /* AppDefaults.swift */,
 				927F717C1CC579F100538566 /* Models */,
 				9228D4721CC814F80075AC9B /* SavedLocationAddresses.swift */,
+				921C51BA1CDCCBE400A5E5B2 /* DataHelper.swift */,
 			);
 			path = MapViewTest;
 			sourceTree = "<group>";
@@ -401,11 +406,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		927F718A1CC6779300538566 /* JSQCoreDataKit.framework */ = {
+		921C51C01CDCD07F00A5E5B2 /* MagicalRecord.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = JSQCoreDataKit.framework;
-			remoteRef = 927F71891CC6779300538566 /* PBXContainerItemProxy */;
+			path = MagicalRecord.framework;
+			remoteRef = 921C51BF1CDCD07F00A5E5B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		927F718C1CC6779300538566 /* Pods_MapViewTest.framework */ = {
@@ -413,13 +418,6 @@
 			fileType = wrapper.framework;
 			path = Pods_MapViewTest.framework;
 			remoteRef = 927F718B1CC6779300538566 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		92C0458B1CD28B4100864084 /* Observable.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Observable.framework;
-			remoteRef = 92C0458A1CD28B4100864084 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -595,16 +593,21 @@
 				927F719B1CC7D7F400538566 /* SearchLocationModel.swift in Sources */,
 				927F717F1CC57A0100538566 /* location.xcdatamodeld in Sources */,
 				92FFDB651CA4071B006C22BF /* AppDelegate.swift in Sources */,
+				921C51B91CDCC93C00A5E5B2 /* LocationModel.swift in Sources */,
 				927F71991CC7D4C000538566 /* LocationSearchViewController.swift in Sources */,
 				927F71831CC668F000538566 /* Location.swift in Sources */,
 				929B1B0A1CB690EB001E5E3F /* AttributesViewController.swift in Sources */,
 				9228D4731CC814F80075AC9B /* SavedLocationAddresses.swift in Sources */,
+				926B0EB41CD92AFF00FCB609 /* GMapPlacesFilterPresenter.swift in Sources */,
 				929B1B0C1CB692F2001E5E3F /* AppDefaults.swift in Sources */,
 				92A940791CAD578300C68D30 /* LocationManager.swift in Sources */,
+				920842A21CD923A500C627EF /* GMapPlacesFilterViewController.swift in Sources */,
 				9276EDC21CD3E7BE00C9188D /* Observable.swift in Sources */,
 				92FFDB8B1CA41724006C22BF /* LocalLocation.swift in Sources */,
+				926B0EB11CD928EB00FCB609 /* GMapsFilterSetting.swift in Sources */,
 				92FFDB871CA416FC006C22BF /* MapViewModel.swift in Sources */,
 				92FFDB891CA4170F006C22BF /* MapViewController.swift in Sources */,
+				921C51BB1CDCCBE400A5E5B2 /* DataHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

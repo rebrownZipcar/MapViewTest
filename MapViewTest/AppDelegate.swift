@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import MagicalRecord
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         self.setupLocation()
         GMSServices.provideAPIKey("AIzaSyCJ4Rw14xml4P34iO8Ck9MT2juog6ivSRw")
+        MagicalRecord.setupCoreDataStackWithStoreNamed("Location")
         return true
     }
 

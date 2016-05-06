@@ -23,14 +23,26 @@ class LocationSearchViewController: UITableViewController, UISearchBarDelegate, 
         /// The presenter and it's data for view use. In this case, the presenter is working off the model, 
         /// and then providing the view controller with the right category of information to be displayed.
     private let presenter = LocationSearchPresenter(locService: SearchLocationService())
+
+        /// Local versions of model data, specifically for display.
     private var recentLocations: [SearchLocation] = []
     private var favoriteLocations: [SearchLocation] = []
     private var autoCompleteLocations: [SearchLocation] = []
 
-
+    
     @IBAction func cancelSearch(sender: UIBarButtonItem)
     {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func filterResults(sender: UIBarButtonItem)
+    {
+        let mapStoryBoard = UIStoryboard(name: "MapView", bundle: NSBundle.mainBundle())
+
+        if let gmapVC = mapStoryBoard.instantiateViewControllerWithIdentifier("gmapsFilterViewController") as? GMapPlacesFilter
+        {
+            self.navigationController?.pushViewController(gmapVC, animated: true)
+        }
     }
 
     override func viewDidLoad()
@@ -42,6 +54,8 @@ class LocationSearchViewController: UITableViewController, UISearchBarDelegate, 
                 /// presenter initialization.
             presenter.attachView(self as LocationSearchView, currLoc: self.currentLocation, currMapRegion: mapRgn)
         }
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filterIcon"), style: .Plain, target: self, action: #selector(LocationSearchViewController.filterResults))
     }
 
     // MARK: - LocationSearchView

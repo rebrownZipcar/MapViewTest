@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import MapKit
 import GoogleMaps
-import Observable
+//import Observable
 
 protocol LocationSearchView : NSObjectProtocol
 {
@@ -39,6 +39,7 @@ class LocationSearchPresenter
 
     var search = MKLocalSearch (request: MKLocalSearchRequest())
     var locationResults = SearchLocationResults()
+    let gmapFilter = GMapsFilterSetting()
 
     init (locService: SearchLocationService)
     {
@@ -47,6 +48,7 @@ class LocationSearchPresenter
 //        self.searchBarContent = Observable("")
 //        searchBarContent.afterChange += {self.searchBarTextChanged($0,newValue: $1)}
         searchBarContent.textChanged.subscribe(searchBarTextChanged)
+        gmapFilter.registerDefaults (gmapFilter.registrationDict)
     }
 
     func attachView (view: LocationSearchView, currLoc: CLLocationCoordinate2D?, currMapRegion: MKCoordinateRegion)
@@ -105,7 +107,7 @@ class LocationSearchPresenter
                 let bounds = GMSCoordinateBounds (mapRegion: self.mapRegion)
                 let filter = GMSAutocompleteFilter()
 
-                filter.type = .NoFilter// .Region//.Geocode
+                filter.type = gmapFilter.currentFilter()// .NoFilter// .Region//.Geocode
 
                 let placesClient = GMSPlacesClient()
 

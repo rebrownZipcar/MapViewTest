@@ -125,11 +125,19 @@ class MapViewModel: NSObject
         let result = factory.createStack()
         stack = result.stack()!
 
-        if AppDefaults().hasInitedLocations == false
+//        if AppDefaults().hasInitedLocations == false
+//        {
+//            Location.setInitialLocations(stack.mainContext)
+//            AppDefaults().hasInitedLocations = true
+//        }
+//
+        do
         {
-//            locations.setInitialLocations()
+            try Location.initialLocationsExist(stack.mainContext)
+        }
+        catch
+        {
             Location.setInitialLocations(stack.mainContext)
-            AppDefaults().hasInitedLocations = true
         }
 
     }

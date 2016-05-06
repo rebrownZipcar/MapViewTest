@@ -8,6 +8,7 @@ link_with 'MapViewTest'
 def common_pods
     #   pod 'JSQCoreDataKit'
     #   pod 'Observable-Swift'
+    pod 'MagicalRecord'
 end
 
 target :MapViewTest do

@@ -63,6 +63,29 @@ public final class Location: NSManagedObject
         }
     }
 
+    public class func initialLocationsExist (context: NSManagedObjectContext) throws
+    {
+        let request = NSFetchRequest(entityName: "Location")
+
+        var results: [Location] = []
+
+        do
+        {
+            if let fetchResults = try context.executeFetchRequest(request) as? [Location]
+            {
+                results = fetchResults
+            }
+        }
+        catch{}
+
+        guard results.count > 0 else
+        {
+            throw LocalLocationError.NoLocationsInRange
+        }
+
+        print("Search results count = \(results.count)")
+    }
+
     public class func getLocationsInRange (context: NSManagedObjectContext, centerCoordinate: CLLocationCoordinate2D, radius: Double) throws -> [Location]
     {
         let request = NSFetchRequest(entityName: "Location")
