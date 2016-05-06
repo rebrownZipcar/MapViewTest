@@ -92,6 +92,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleNewLocationTap(_:)))
         tap.numberOfTapsRequired = 1
         view.addGestureRecognizer(tap)
+        loadLocationInformation()
     }
 
     func updateAttributes ()
@@ -157,7 +158,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, TripIndica
     {
         super.viewDidAppear(animated)
 
-        loadLocationInformation()
+//        loadLocationInformation()
         mapView.delegate = self
         updateAttributes()
     }
