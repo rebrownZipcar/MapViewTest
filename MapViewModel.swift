@@ -120,25 +120,29 @@ class MapViewModel: NSObject
 
         addressObj.changed.subscribe(addressChangedHandler)
 
-        let model = CoreDataModel(name: modelName, bundle: modelBundle)
-        let factory = CoreDataStackFactory(model: model)
-        let result = factory.createStack()
-        stack = result.stack()!
+//        let model = CoreDataModel(name: modelName, bundle: modelBundle)
+//        let factory = CoreDataStackFactory(model: model)
+//        let result = factory.createStack()
+//        stack = result.stack()!
 
 //        if AppDefaults().hasInitedLocations == false
 //        {
 //            Location.setInitialLocations(stack.mainContext)
 //            AppDefaults().hasInitedLocations = true
 //        }
-//
-        do
+
+        if LocationHelper.count() == 0
         {
-            try Location.initialLocationsExist(stack.mainContext)
+            LocationHelper.preload (Location.initialLocations())
         }
-        catch
-        {
-            Location.setInitialLocations(stack.mainContext)
-        }
+//        do
+//        {
+//            try Location.initialLocationsExist(stack.mainContext)
+//        }
+//        catch
+//        {
+//            let los = Location.setInitialLocations(stack.mainContext)
+//        }
 
     }
 
@@ -169,11 +173,7 @@ class MapViewModel: NSObject
 
     func addNewLocationToModel (newPt: CLLocationCoordinate2D)
     {
-//        let newLoc = LocalLocation(locationId: getRandomNumber(1000000), lat: newPt.latitude, long: newPt.longitude, vehicleCount: getRandomNumber(10))
-//        locations.addLocation(newLoc)
-
-        let _ = Location.newLocation(self.stack.mainContext, id: Int32(getRandomNumber(1000000)), latitude: newPt.latitude, longitude: newPt.longitude, vehicles: Int16(getRandomNumber(10)))
-        saveContext(self.stack.mainContext)
+        LocationHelper.insert(Location(id: Int32(getRandomNumber(1000000)), latitude: newPt.latitude, longitude: newPt.longitude, vehicleCount: Int16(getRandomNumber(10))))
 
         generatePins()
     }
@@ -281,13 +281,14 @@ class MapViewModel: NSObject
 //        mapView.removeAnnotations(mapView.annotations.filter({ (object) -> Bool in
 //            return object is CustomAnno
 //        }))
-        if let locMapView = self.mapView, stk = self.stack
+        if let locMapView = self.mapView//, stk = self.stack
         {
             locMapView.removeAnnotations(locMapView.annotations)
 
             do
             {
-                let results = try Location.getLocationsInRange (stk.mainContext, centerCoordinate: locMapView.region.center, radius: locMapView.getRegionRadius())
+                let results = try Location.getLocationsInRange (locMapView.region.center, radius: locMapView.getRegionRadius())
+//                let results = try Location.getLocationsInRange (stk.mainContext, centerCoordinate: locMapView.region.center, radius: locMapView.getRegionRadius())
 //                let results = try locations.getLocationsInRange (locMapView.region.center, radius: locMapView.getRegionRadius())
 
                 for location in results

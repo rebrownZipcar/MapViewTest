@@ -6,13 +6,15 @@
 //  Copyright © 2016 Zipcar. All rights reserved.
 //
 
-//import Foundation
-//import MagicalRecord
-//
-//class Location: NSManagedObject
-//{
-//    @NSManaged var id: NSNumber?
-//    @NSManaged var latitude: NSNumber?
-//    @NSManaged var longitude: NSNumber?
-//    @NSManaged var vehicleCount: NSNumber?
-//}
+import Foundation
+import MagicalRecord
+
+@objc(Location)
+
+class Location: NSManagedObject
+{
+    @NSManaged var id: NSNumber?
+    @NSManaged var latitude: NSNumber?
+    @NSManaged var longitude: NSNumber?
+    @NSManaged var vehicleCount: NSNumber?
+}
